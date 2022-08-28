@@ -6,7 +6,7 @@ Note that this library is very young and still quite limited. But feel free to c
 ```
 PortfolioPerformance_TableHelper.TransactionTable.AccountTransactions.Table mining_dividend_table = new PortfolioPerformance_TableHelper.TransactionTable.AccountTransactions.Table();
 PortfolioPerformance_TableHelper.TransactionTable.PortfolioTransactions.Table transactions_table = new PortfolioPerformance_TableHelper.TransactionTable.PortfolioTransactions.Table();
-// add table income positions
+// add dividend for each individual mining device
 IncomeOverview incomeOverview = (IncomeOverview)IncomePreviewStackPanel.Children[0];
 foreach (IncomeOverview_Row position in incomeOverview.MainPanel.Children)
 {
@@ -19,7 +19,7 @@ foreach (IncomeOverview_Row position in incomeOverview.MainPanel.Children)
     Note: "mining income"
     );
 }
-// buy currency from Table
+// buy currency from income dividends for calculation purposes
 transactions_table.AddBuyTransaction(DateTime: ((DateTime)this.IncomeDate_DatePicker.SelectedDate).AddMinutes(1),
     Symbol: this.CurrencyName_Combobox.SelectedItem.ToString()+"-USD",
     SecurityName: "",
