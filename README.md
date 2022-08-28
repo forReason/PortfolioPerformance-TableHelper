@@ -3,7 +3,7 @@ This library should help creating csv entries for portfolio performance.
 Note that this library is very young and still quite limited. But feel free to contribute!
 
 # usage example
-```
+``` C#
 PortfolioPerformance_TableHelper.TransactionTable.AccountTransactions.Table mining_dividend_table = new PortfolioPerformance_TableHelper.TransactionTable.AccountTransactions.Table();
 PortfolioPerformance_TableHelper.TransactionTable.PortfolioTransactions.Table transactions_table = new PortfolioPerformance_TableHelper.TransactionTable.PortfolioTransactions.Table();
 // add dividend for each individual mining device
