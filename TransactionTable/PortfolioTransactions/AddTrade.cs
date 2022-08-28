@@ -8,7 +8,7 @@ namespace PortfolioPerformance_TableHelper.TransactionTable.PortfolioTransaction
 {
     public partial class Table
     {
-        public void AddBuyTransaction(DateTime DateTime, string SecurityName, string CashAccount, double GrossValue,double ExchangeRate = 1 ,double Shares = -1,
+        public void AddBuyTransaction(DateTime DateTime, string SecurityName, string CashAccount, string SecuritiesAccount, double GrossValue,double ExchangeRate = 1 ,double Shares = -1,
             double Fees = -1, double Tax = -1, string WKN = "", string ISIN = "", string Symbol = "", string Note = "")
         {
             int index = MyTable.AppendEmptyRecord();
@@ -18,6 +18,7 @@ namespace PortfolioPerformance_TableHelper.TransactionTable.PortfolioTransaction
             MyTable.SetCell(TableHeaders.Time.Name, index, time.Time);
             MyTable.SetCell(TableHeaders.SecurityName.Name, index, SecurityName);
             MyTable.SetCell(TableHeaders.CashAccount.Name, index, CashAccount);
+            MyTable.SetCell(TableHeaders.SecuritiesAccount.Name, index, SecuritiesAccount);
             if (Shares != -1)
             {
                 MyTable.SetCell(TableHeaders.ShareAmount.Name, index, Shares.ToString());
