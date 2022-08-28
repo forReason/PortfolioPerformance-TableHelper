@@ -62,7 +62,7 @@ namespace PortfolioPerformance_TableHelper.TransactionTable.PortfolioTransaction
         /// the associated securities account (to add/remove securities from)
         /// </summary>
         public static TableHeaders SecuritiesAccount { get { return new TableHeaders("Securities Account"); } }
-        public static TableHeaders OffsetAccount { get { return new TableHeaders("Offset Account"); } }
+        public static TableHeaders OffsetSecuritiesAccount { get { return new TableHeaders("Offset securities account"); } }
         /// <summary>
         /// The associated cash account which also determines the currency in which the value is calculated
         /// </summary>
@@ -71,7 +71,7 @@ namespace PortfolioPerformance_TableHelper.TransactionTable.PortfolioTransaction
         public static TableHeaders[] ToArray()
         {
             return new TableHeaders[] { Date, Time,Type,WKN,ISIN,Symbol,SecurityName, ShareAmount,CurrencyGrossAmount,GrossAmount,
-                TransactionCurrency,Value,ExchangeRate,Fees,Taxes,Note,SecuritiesAccount,OffsetAccount,CashAccount };
+                TransactionCurrency,Value,ExchangeRate,Fees,Taxes,Note,SecuritiesAccount,OffsetSecuritiesAccount,CashAccount };
         }
         public static string[] ToStringArray()
         {

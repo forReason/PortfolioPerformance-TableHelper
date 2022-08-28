@@ -11,23 +11,33 @@ namespace PortfolioPerformance_TableHelper.TransactionTable.PortfolioTransaction
         private TransactionTypes(string name) { Name = name; }
 
         public string Name { get; private set; }
-
-        //public static TransactionTypes Buy { get { return new TransactionTypes("Buy"); } }
-        //public static TransactionTypes Sell { get { return new TransactionTypes("Sell"); } }
-        public static TransactionTypes Deposit { get { return new TransactionTypes("Deposit"); } }
-        public static TransactionTypes Withdraw { get { return new TransactionTypes("Removal"); } }
+        /// <summary>
+        /// buing an asser
+        /// </summary>
+        public static TransactionTypes Buy { get { return new TransactionTypes("Buy"); } }
+        /// <summary>
+        /// Selling an asset
+        /// </summary>
+        public static TransactionTypes Sell { get { return new TransactionTypes("Sell"); } }
+        /// <summary>
+        /// Transferring an asset (from self)
+        /// </summary>
         public static TransactionTypes TransferInbound { get { return new TransactionTypes("Transfer (Inbound)"); } }
+        /// <summary>
+        /// transferring an asset (to self)
+        /// </summary>
         public static TransactionTypes TransferOutbound { get { return new TransactionTypes("Transfer (Outbound)"); } }
-        public static TransactionTypes Dividend { get { return new TransactionTypes("Dividend"); } }
-        public static TransactionTypes Fees { get { return new TransactionTypes("Fees"); } }
-        public static TransactionTypes FeesRefund { get { return new TransactionTypes("Fees Refund"); } }
-        public static TransactionTypes Tax { get { return new TransactionTypes("Taxes"); } }
-        public static TransactionTypes TaxRefund { get { return new TransactionTypes("Tax Refund"); } }
-        public static TransactionTypes Interest { get { return new TransactionTypes("Interest"); } }
-        public static TransactionTypes InterestCharge { get { return new TransactionTypes("Interest Charge"); } }
+        /// <summary>
+        /// receiving asset from third party
+        /// </summary>
+        public static TransactionTypes DeliveryInbound { get { return new TransactionTypes("Delivery (Inbound)"); } }
+        /// <summary>
+        /// giving asset to third party
+        /// </summary>
+        public static TransactionTypes DeliveryOutbound { get { return new TransactionTypes("Delivery (Outbound)"); } }
         public static TransactionTypes[] ToArray()
         {
-            return new TransactionTypes[] { /*Buy, Sell,*/ Deposit,Withdraw,TransferInbound,TransferOutbound,Dividend,Fees,FeesRefund,Tax,TaxRefund,Interest,InterestCharge };
+            return new TransactionTypes[] { Buy, Sell,TransferInbound,TransferOutbound, DeliveryInbound, DeliveryOutbound };
         }
         public override string ToString()
         {

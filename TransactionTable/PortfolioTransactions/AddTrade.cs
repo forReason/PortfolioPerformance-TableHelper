@@ -25,9 +25,12 @@ namespace PortfolioPerformance_TableHelper.TransactionTable.PortfolioTransaction
             //MyTable.SetCell(TableHeaders.GrossAmount.Name, index, GrossValue.ToString());
             MyTable.SetCell(TableHeaders.Value.Name, index, GrossValue.ToString());
             MyTable.SetCell(TableHeaders.CurrencyGrossAmount.Name, index, GrossValue.ToString());
-            MyTable.SetCell(TableHeaders.GrossAmount.Name, index, GrossValue.ToString());
-            MyTable.SetCell(TableHeaders.TransactionCurrency.Name, index, "CHF");
-            MyTable.SetCell(TableHeaders.ExchangeRate.Name, index, ExchangeRate.ToString());
+            //MyTable.SetCell(TableHeaders.GrossAmount.Name, index, GrossValue.ToString());
+            //MyTable.SetCell(TableHeaders.TransactionCurrency.Name, index, "CHF");
+            if (ExchangeRate != -1)
+            {
+                MyTable.SetCell(TableHeaders.ExchangeRate.Name, index, ExchangeRate.ToString());
+            }
             if (Fees != -1)
             {
                 MyTable.SetCell(TableHeaders.Fees.Name, index, Fees.ToString());
