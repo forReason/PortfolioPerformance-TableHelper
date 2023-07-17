@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PortfolioPerformance_TableHelper.TransactionTable.PortfolioTransactions
+﻿namespace PortfolioPerformance_TableHelper.TransactionTable.PortfolioTransactions
 {
     public class TableHeaders
     {
@@ -12,61 +6,100 @@ namespace PortfolioPerformance_TableHelper.TransactionTable.PortfolioTransaction
 
         public string Name { get; private set; }
         /// <summary>
-        /// The date of the transaction
+        /// Represents the date of the transaction. This field should contain a valid date in the format yyyy-MM-dd.
         /// </summary>
-        public static TableHeaders Date { get { return new TableHeaders("Date"); } }
-        /// <summary>
-        /// The time of the transaction (note: only precise to the minute)
-        /// </summary>
-        public static TableHeaders Time { get { return new TableHeaders("Time"); } }
-        /// <summary>
-        /// The transaction type
-        /// </summary>
-        public static TableHeaders Type { get { return new TableHeaders("Type"); } }
-        /// <summary>
-        /// the wkn identifier of the security. EG USDT, ETH, etc
-        /// </summary>
-        public static TableHeaders WKN { get { return new TableHeaders("WKN"); } }
-        public static TableHeaders ISIN { get { return new TableHeaders("ISIN"); } }
-        public static TableHeaders Symbol { get { return new TableHeaders("Ticker Symbol"); } }
-        public static TableHeaders SecurityName { get { return new TableHeaders("Security Name"); } }
-        /// <summary>
-        /// amount of transaction shares
-        /// </summary>
-        public static TableHeaders ShareAmount { get { return new TableHeaders("Shares"); } }
-        public static TableHeaders CurrencyGrossAmount { get { return new TableHeaders("Currency Gross Amount"); } }
-        public static TableHeaders GrossAmount { get { return new TableHeaders("Gross Amount"); } }
-        public static TableHeaders TransactionCurrency { get { return new TableHeaders("Transaction Currency"); } }
+        public static TableHeaders Date => new TableHeaders("Date");
 
         /// <summary>
-        /// The Currencyvalue of the Transaction (currency is determined by the target account)
+        /// Represents the time of the transaction, precise up to the minute. This field should contain a valid time in the format HH:mm.
         /// </summary>
-        public static TableHeaders Value { get { return new TableHeaders("Value"); } }
+        public static TableHeaders Time => new TableHeaders("Time");
+
         /// <summary>
-        /// The rate of exchange of the currency. may be used to triangulate between share amount, share price and total price
+        /// Specifies the type of the transaction. This field should be one of the predefined transaction types, such as 'Buy', 'Sell', etc.
         /// </summary>
-        public static TableHeaders ExchangeRate { get { return new TableHeaders("Exchange Rate"); } }
+        public static TableHeaders Type => new TableHeaders("Type");
+
         /// <summary>
-        /// Trading or other fees associated with this transaction
+        /// Represents the WKN identifier of the security. This field should contain the specific WKN identifier, for instance 'USDT', 'ETH', etc.
         /// </summary>
-        public static TableHeaders Fees { get { return new TableHeaders("Fees"); } }
+        public static TableHeaders WKN => new TableHeaders("WKN");
+
         /// <summary>
-        /// Governement Taxes which apply to this transaction
+        /// Represents the ISIN identifier of the security. This field should contain a valid ISIN for the security.
         /// </summary>
-        public static TableHeaders Taxes { get { return new TableHeaders("Taxes"); } }
+        public static TableHeaders ISIN => new TableHeaders("ISIN");
+
         /// <summary>
-        /// Note for the transaction
+        /// Represents the ticker symbol of the security. This field should contain the symbol as used in exchanges, such as 'AAPL' for Apple Inc.
         /// </summary>
-        public static TableHeaders Note { get { return new TableHeaders("Note"); } }
+        public static TableHeaders Symbol => new TableHeaders("Ticker Symbol");
+
         /// <summary>
-        /// the associated securities account (to add/remove securities from)
+        /// Specifies the human-readable name of the security. This field should contain the full name of the security.
         /// </summary>
-        public static TableHeaders SecuritiesAccount { get { return new TableHeaders("Securities Account"); } }
-        public static TableHeaders OffsetSecuritiesAccount { get { return new TableHeaders("Offset securities account"); } }
+        public static TableHeaders SecurityName => new TableHeaders("Security Name");
+
         /// <summary>
-        /// The associated cash account which also determines the currency in which the value is calculated
+        /// Denotes the number of shares involved in the transaction. This field should contain a numerical value.
         /// </summary>
-        public static TableHeaders CashAccount { get { return new TableHeaders("Cash Account"); } }
+        public static TableHeaders ShareAmount => new TableHeaders("Shares");
+
+        /// <summary>
+        /// Represents the gross amount of the transaction in the original currency. This field should contain a numerical value.
+        /// </summary>
+        public static TableHeaders CurrencyGrossAmount => new TableHeaders("Currency Gross Amount");
+
+        /// <summary>
+        /// Represents the gross amount of the transaction. This field should contain a numerical value.
+        /// </summary>
+        public static TableHeaders GrossAmount => new TableHeaders("Gross Amount");
+
+        /// <summary>
+        /// Specifies the currency in which the transaction was conducted. This field should contain a valid currency code, such as 'USD', 'EUR', etc.
+        /// </summary>
+        public static TableHeaders TransactionCurrency => new TableHeaders("Transaction Currency");
+
+        /// <summary>
+        /// Represents the net value of the transaction in the target account's currency. This field should contain a numerical value.
+        /// </summary>
+        public static TableHeaders Value => new TableHeaders("Value");
+
+        /// <summary>
+        /// Denotes the exchange rate used for this transaction. This field is used to convert between the transaction currency and the account's base currency.
+        /// </summary>
+        public static TableHeaders ExchangeRate => new TableHeaders("Exchange Rate");
+
+        /// <summary>
+        /// Specifies any trading or transaction fees associated with this transaction. This field should contain a numerical value.
+        /// </summary>
+        public static TableHeaders Fees => new TableHeaders("Fees");
+
+        /// <summary>
+        /// Specifies any government taxes applied to this transaction. This field should contain a numerical value.
+        /// </summary>
+        public static TableHeaders Taxes => new TableHeaders("Taxes");
+
+        /// <summary>
+        /// Allows for any additional notes or details about the transaction. This field may contain any string.
+        /// </summary>
+        public static TableHeaders Note => new TableHeaders("Note");
+
+        /// <summary>
+        /// Specifies the associated securities account for this transaction. This field should contain the identifier of the securities account.
+        /// </summary>
+        public static TableHeaders SecuritiesAccount => new TableHeaders("Securities Account");
+
+        /// <summary>
+        /// Specifies the associated offset securities account for this transaction. This field should contain the identifier of the offset securities account.
+        /// </summary>
+        public static TableHeaders OffsetSecuritiesAccount => new TableHeaders("Offset securities account");
+
+        /// <summary>
+        /// Specifies the associated cash account for this transaction. This field should contain the identifier of the cash account.
+        /// </summary>
+        public static TableHeaders CashAccount => new TableHeaders("Cash Account");
+
 
         public static TableHeaders[] ToArray()
         {

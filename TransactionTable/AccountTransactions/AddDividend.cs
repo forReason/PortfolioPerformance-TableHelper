@@ -8,6 +8,21 @@ namespace PortfolioPerformance_TableHelper.TransactionTable.AccountTransactions
 {
     public partial class Table
     {
+        /// <summary>
+        /// this function adds a dividend
+        /// </summary>
+        /// <param name="DateTime"></param>
+        /// <param name="SecurityName"></param>
+        /// <param name="CashAccount"></param>
+        /// <param name="SecuritiesAccount"></param>
+        /// <param name="GrossValue"></param>
+        /// <param name="Shares"></param>
+        /// <param name="Fees"></param>
+        /// <param name="Tax"></param>
+        /// <param name="WKN"></param>
+        /// <param name="ISIN"></param>
+        /// <param name="Symbol"></param>
+        /// <param name="Note"></param>
         public void AddDividend(DateTime DateTime, string SecurityName, string CashAccount, string SecuritiesAccount,  double GrossValue, double Shares=-1,
             double Fees = -1, double Tax = -1, string WKN = "", string ISIN = "", string Symbol = "", string Note = "")
         {

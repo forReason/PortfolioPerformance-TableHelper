@@ -1,72 +1,106 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PortfolioPerformance_TableHelper.TransactionTable.AccountTransactions
+﻿namespace PortfolioPerformance_TableHelper.TransactionTable.AccountTransactions
 {
     public class TableHeaders
     {
         private TableHeaders(string name) { Name = name; }
 
         public string Name { get; private set; }
-        /// <summary>
-        /// The date of the transaction
-        /// </summary>
-        public static TableHeaders Date { get { return new TableHeaders("Date"); } }
-        /// <summary>
-        /// The time of the transaction (note: only precise to the minute)
-        /// </summary>
-        public static TableHeaders Time { get { return new TableHeaders("Time"); } }
-        /// <summary>
-        /// The transaction type
-        /// </summary>
-        public static TableHeaders Type { get { return new TableHeaders("Type"); } }
-        /// <summary>
-        /// the wkn identifier of the security. EG USDT, ETH, etc
-        /// </summary>
-        public static TableHeaders WKN { get { return new TableHeaders("WKN"); } }
-        public static TableHeaders ISIN { get { return new TableHeaders("ISIN"); } }
-        public static TableHeaders Symbol { get { return new TableHeaders("Ticker Symbol"); } }
-        public static TableHeaders SecurityName { get { return new TableHeaders("Security Name"); } }
-        /// <summary>
-        /// amount of transaction shares
-        /// </summary>
-        public static TableHeaders ShareAmount { get { return new TableHeaders("Shares"); } }
-        public static TableHeaders CurrencyGrossAmount { get { return new TableHeaders("Currency Gross Amount"); } }
-        public static TableHeaders GrossAmount { get { return new TableHeaders("Gross Amount"); } }
-        public static TableHeaders TransactionCurrency { get { return new TableHeaders("Transaction Currency"); } }
 
         /// <summary>
-        /// The Currencyvalue of the Transaction (currency is determined by the target account)
+        /// The transaction's date.
         /// </summary>
-        public static TableHeaders Value { get { return new TableHeaders("Value"); } }
+        public static TableHeaders Date => new TableHeaders("Date");
+
         /// <summary>
-        /// The rate of exchange of the currency. may be used to triangulate between share amount, share price and total price
+        /// The transaction's time, precise to the minute.
         /// </summary>
-        public static TableHeaders ExchangeRate { get { return new TableHeaders("Exchange Rate"); } }
+        public static TableHeaders Time => new TableHeaders("Time");
+
         /// <summary>
-        /// Trading or other fees associated with this transaction
+        /// The type of the transaction.
         /// </summary>
-        public static TableHeaders Fees { get { return new TableHeaders("Fees"); } }
+        public static TableHeaders Type => new TableHeaders("Type");
+
         /// <summary>
-        /// Governement Taxes which apply to this transaction
+        /// The WKN identifier of the security, e.g. USDT, ETH.
         /// </summary>
-        public static TableHeaders Taxes { get { return new TableHeaders("Taxes"); } }
+        public static TableHeaders WKN => new TableHeaders("WKN");
+
         /// <summary>
-        /// Note for the transaction
+        /// The ISIN identifier of the security, e.g. USDT, ETH.
         /// </summary>
-        public static TableHeaders Note { get { return new TableHeaders("Note"); } }
+        public static TableHeaders ISIN => new TableHeaders("ISIN");
+
         /// <summary>
-        /// the associated securities account (to add/remove securities from)
+        /// The ticker symbol of the security, e.g. USDT, ETH.
         /// </summary>
-        public static TableHeaders SecuritiesAccount { get { return new TableHeaders("Securities Account"); } }
-        public static TableHeaders OffsetAccount { get { return new TableHeaders("Offset Account"); } }
+        public static TableHeaders Symbol => new TableHeaders("Ticker Symbol");
+
         /// <summary>
-        /// The associated cash account which also determines the currency in which the value is calculated
+        /// The human-readable name of the security, e.g. chia, bitcoin, ethereum.
         /// </summary>
-        public static TableHeaders CashAccount { get { return new TableHeaders("Cash Account"); } }
+        public static TableHeaders SecurityName => new TableHeaders("Security Name");
+
+        /// <summary>
+        /// The number of shares involved in the transaction.
+        /// </summary>
+        public static TableHeaders ShareAmount => new TableHeaders("Shares");
+
+        /// <summary>
+        /// The gross amount of the transaction in its original currency.
+        /// </summary>
+        public static TableHeaders CurrencyGrossAmount => new TableHeaders("Currency Gross Amount");
+
+        /// <summary>
+        /// The gross amount of the transaction.
+        /// </summary>
+        public static TableHeaders GrossAmount => new TableHeaders("Gross Amount");
+
+        /// <summary>
+        /// The currency in which the transaction is performed.
+        /// </summary>
+        public static TableHeaders TransactionCurrency => new TableHeaders("Transaction Currency");
+
+        /// <summary>
+        /// The transaction's value in the target account's currency.
+        /// </summary>
+        public static TableHeaders Value => new TableHeaders("Value");
+
+        /// <summary>
+        /// The exchange rate applicable for the transaction. Can be used to calculate share amount, share price, and total price.
+        /// </summary>
+        public static TableHeaders ExchangeRate => new TableHeaders("Exchange Rate");
+
+        /// <summary>
+        /// Fees associated with the transaction, e.g., trading fees.
+        /// </summary>
+        public static TableHeaders Fees => new TableHeaders("Fees");
+
+        /// <summary>
+        /// Taxes imposed by the government on the transaction.
+        /// </summary>
+        public static TableHeaders Taxes => new TableHeaders("Taxes");
+
+        /// <summary>
+        /// Note or comments related to the transaction.
+        /// </summary>
+        public static TableHeaders Note => new TableHeaders("Note");
+
+        /// <summary>
+        /// The securities account related to the transaction where securities are added or removed.
+        /// </summary>
+        public static TableHeaders SecuritiesAccount => new TableHeaders("Securities Account");
+
+        /// <summary>
+        /// The offset account related to the transaction.
+        /// </summary>
+        public static TableHeaders OffsetAccount => new TableHeaders("Offset Account");
+
+        /// <summary>
+        /// The cash account related to the transaction. It determines the currency in which the transaction value is calculated.
+        /// </summary>
+        public static TableHeaders CashAccount => new TableHeaders("Cash Account");
+
 
         public static TableHeaders[] ToArray()
         {

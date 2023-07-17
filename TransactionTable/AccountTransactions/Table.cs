@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PortfolioPerformance_TableHelper.TransactionTable.AccountTransactions
+﻿namespace PortfolioPerformance_TableHelper.TransactionTable.AccountTransactions
 {
     public partial class Table
     {
