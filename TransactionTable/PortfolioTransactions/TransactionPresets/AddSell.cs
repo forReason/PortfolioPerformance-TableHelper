@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PortfolioPerformance_TableHelper.TransactionTable.PortfolioTransactions
+﻿namespace PortfolioPerformanceTableHelper
 {
-    public partial class Table
+    public partial class PortfolioTransactionsTable
     {
         /// <summary>
         /// Adds a sell transaction to the portfolio transactions table.
@@ -27,47 +21,47 @@ namespace PortfolioPerformance_TableHelper.TransactionTable.PortfolioTransaction
 
         public void AddSellTransaction(DateTime DateTime, string SecurityName, string CashAccount, string SecuritiesAccount, double GrossValue, double ExchangeRate = 1, double Shares = -1, double Fees = -1, double Tax = -1, string WKN = "", string ISIN = "", string Symbol = "", string Note = "")
         {
-            int index = MyTable.AppendEmptyRecord();
-            MyTable.SetCell(TableHeaders.Type.Name, index, TransactionTypes.Sell.Name);
+            int index = Table.AppendEmptyRecord();
+            Table.SetCell(PortfolioTableHeaders.Type.Name, index, PortfolioTransactionTypes.Sell.Name);
             SplitDateTime time = DateTimeHelper.Split(DateTime);
-            MyTable.SetCell(TableHeaders.Date.Name, index, time.Date);
-            MyTable.SetCell(TableHeaders.Time.Name, index, time.Time);
-            MyTable.SetCell(TableHeaders.SecurityName.Name, index, SecurityName);
-            MyTable.SetCell(TableHeaders.CashAccount.Name, index, CashAccount);
-            MyTable.SetCell(TableHeaders.SecuritiesAccount.Name, index, SecuritiesAccount);
+            Table.SetCell(PortfolioTableHeaders.Date.Name, index, time.Date);
+            Table.SetCell(PortfolioTableHeaders.Time.Name, index, time.Time);
+            Table.SetCell(PortfolioTableHeaders.SecurityName.Name, index, SecurityName);
+            Table.SetCell(PortfolioTableHeaders.CashAccount.Name, index, CashAccount);
+            Table.SetCell(PortfolioTableHeaders.SecuritiesAccount.Name, index, SecuritiesAccount);
             if (Shares != -1)
             {
-                MyTable.SetCell(TableHeaders.ShareAmount.Name, index, Shares.ToString());
+                Table.SetCell(PortfolioTableHeaders.ShareAmount.Name, index, Shares.ToString());
             }
-            MyTable.SetCell(TableHeaders.Value.Name, index, GrossValue.ToString());
-            MyTable.SetCell(TableHeaders.CurrencyGrossAmount.Name, index, GrossValue.ToString());
+            Table.SetCell(PortfolioTableHeaders.Value.Name, index, GrossValue.ToString());
+            Table.SetCell(PortfolioTableHeaders.CurrencyGrossAmount.Name, index, GrossValue.ToString());
             if (ExchangeRate != 1)
             {
-                MyTable.SetCell(TableHeaders.ExchangeRate.Name, index, ExchangeRate.ToString());
+                Table.SetCell(PortfolioTableHeaders.ExchangeRate.Name, index, ExchangeRate.ToString());
             }
             if (Fees != -1)
             {
-                MyTable.SetCell(TableHeaders.Fees.Name, index, Fees.ToString());
+                Table.SetCell(PortfolioTableHeaders.Fees.Name, index, Fees.ToString());
             }
             if (Tax != -1)
             {
-                MyTable.SetCell(TableHeaders.Taxes.Name, index, Tax.ToString());
+                Table.SetCell(PortfolioTableHeaders.Taxes.Name, index, Tax.ToString());
             }
             if (WKN != "")
             {
-                MyTable.SetCell(TableHeaders.WKN.Name, index, WKN);
+                Table.SetCell(PortfolioTableHeaders.WKN.Name, index, WKN);
             }
             if (ISIN != "")
             {
-                MyTable.SetCell(TableHeaders.ISIN.Name, index, ISIN);
+                Table.SetCell(PortfolioTableHeaders.ISIN.Name, index, ISIN);
             }
             if (Symbol != "")
             {
-                MyTable.SetCell(TableHeaders.Symbol.Name, index, Symbol);
+                Table.SetCell(PortfolioTableHeaders.Symbol.Name, index, Symbol);
             }
             if (Note != "")
             {
-                MyTable.SetCell(TableHeaders.Note.Name, index, Note);
+                Table.SetCell(PortfolioTableHeaders.Note.Name, index, Note);
             }
         }
     }
