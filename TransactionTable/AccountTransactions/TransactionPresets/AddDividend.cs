@@ -25,12 +25,12 @@ namespace PortfolioPerformanceTableHelper
         /// calling this method.
         /// </remarks>
         public void AddDividend
-            (DepositAccount cashAccount, Security security, DateTime depositDate,
+            (DateTime dividendDate, DepositAccount cashAccount, Security security, 
             double shareAmount, double creditNote, double fees = 0, double taxes = 0,
             string? note = null)
         {
             AddDividend
-            (cashAccount, security, depositDate,
+            (dividendDate, cashAccount, security,
             (decimal)shareAmount, (decimal)creditNote, (decimal)fees, (decimal)taxes,
             note);
         }
@@ -54,7 +54,7 @@ namespace PortfolioPerformanceTableHelper
         /// calling this method.
         /// </remarks>
         public void AddDividend
-            (DepositAccount cashAccount,Security security, DateTime depositDate, 
+            (DateTime dividendDate, DepositAccount cashAccount,Security security, 
             decimal shareAmount, decimal creditNote, decimal fees = 0, decimal taxes = 0,
             string? note = null)
         {
@@ -64,7 +64,7 @@ namespace PortfolioPerformanceTableHelper
             // select account, currency is defined by account
             Table.SetCell(AccountTableHeaders.CashAccount.Name, index, cashAccount.Name);
             // set the time
-            SplitDateTime time = DateTimeHelper.Split(depositDate);
+            SplitDateTime time = DateTimeHelper.Split(dividendDate);
             Table.SetCell(AccountTableHeaders.Date.Name, index, time.Date);
             Table.SetCell(AccountTableHeaders.Time.Name, index, time.Time);
             // set the security

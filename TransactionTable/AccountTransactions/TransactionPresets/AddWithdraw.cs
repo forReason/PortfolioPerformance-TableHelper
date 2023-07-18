@@ -16,9 +16,9 @@ namespace PortfolioPerformanceTableHelper
         /// The cash account's currency is 
         /// to be already defined in the application. 
         /// </remarks>
-        public void AddWithdraw(DepositAccount cashAccount, DateTime depositDate, double amount, string? note = null)
+        public void AddWithdraw(DateTime withdrawDate, DepositAccount cashAccount, double amount, string? note = null)
         {
-            AddWithdraw(cashAccount, depositDate, (decimal) amount, note);
+            AddWithdraw(withdrawDate, cashAccount, (decimal) amount, note);
         }
         /// <summary>
         /// Adds a new deposit record for a <b>Deposit Account</b>.<br/>
@@ -32,7 +32,7 @@ namespace PortfolioPerformanceTableHelper
         /// The cash account's currency is 
         /// to be already defined in the application. 
         /// </remarks>
-        public void AddWithdraw(DepositAccount cashAccount, DateTime depositDate, decimal amount, string? note = null)
+        public void AddWithdraw(DateTime withdrawDate, DepositAccount cashAccount, decimal amount, string? note = null)
         {
             int index = Table.AppendEmptyRecord();
             // set Transaction Type
@@ -40,7 +40,7 @@ namespace PortfolioPerformanceTableHelper
             // select account, currency is defined by account
             Table.SetCell(AccountTableHeaders.CashAccount.Name, index, cashAccount.Name);
             // set the time
-            SplitDateTime time = DateTimeHelper.Split(depositDate);
+            SplitDateTime time = DateTimeHelper.Split(withdrawDate);
             Table.SetCell(AccountTableHeaders.Date.Name, index, time.Date);
             Table.SetCell(AccountTableHeaders.Time.Name, index, time.Time);
             // set the amount

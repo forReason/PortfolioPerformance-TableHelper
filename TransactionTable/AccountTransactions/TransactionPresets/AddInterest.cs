@@ -20,11 +20,11 @@ namespace PortfolioPerformanceTableHelper
         /// This method will throw an ArgumentOutOfRangeException if the tax amount is greater than the gross amount of interest.
         /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the tax amount is greater than the gross amount of interest.</exception>   
-        public void AddInterest(DepositAccount cashAccount, DateTime depositDate,
+        public void AddInterest(DateTime interestDate, DepositAccount cashAccount, 
             double grossAmount, double? taxes = null,
             string? note = null)
         {
-            AddInterest(cashAccount, depositDate, (decimal)grossAmount, (decimal?) taxes, note);
+            AddInterest(interestDate, cashAccount, (decimal)grossAmount, (decimal?) taxes, note);
         }
         /// <summary>
         /// <b>WARNING:</b> As of writing of this code, there is a bug which discads tax values in interest payments:<br/>
@@ -42,7 +42,7 @@ namespace PortfolioPerformanceTableHelper
         /// This method will throw an ArgumentOutOfRangeException if the tax amount is greater than the gross amount of interest.
         /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the tax amount is greater than the gross amount of interest.</exception>   
-        public void AddInterest(DepositAccount cashAccount, DateTime depositDate, 
+        public void AddInterest(DateTime interestDate, DepositAccount cashAccount, 
             decimal grossAmount, decimal? taxes = null,
             string? note = null)
         {
@@ -59,7 +59,7 @@ namespace PortfolioPerformanceTableHelper
             // select account, currency is defined by account
             Table.SetCell(AccountTableHeaders.CashAccount.Name, index, cashAccount.Name);
             // set the time
-            SplitDateTime time = DateTimeHelper.Split(depositDate);
+            SplitDateTime time = DateTimeHelper.Split(interestDate);
             Table.SetCell(AccountTableHeaders.Date.Name, index, time.Date);
             Table.SetCell(AccountTableHeaders.Time.Name, index, time.Time);
             // set the amount

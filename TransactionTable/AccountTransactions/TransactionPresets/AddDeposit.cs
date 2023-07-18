@@ -16,9 +16,9 @@ namespace PortfolioPerformanceTableHelper
         /// The cash account's currency is 
         /// to be already defined in the application. 
         /// </remarks>
-        public void AddDeposit(DepositAccount cashAccount, DateTime depositDate, double amount, string? note = null)
+        public void AddDeposit(DateTime depositDate, DepositAccount cashAccount, double amount, string? note = null)
         {
-            AddDeposit(cashAccount, depositDate, (decimal) amount, note);
+            AddDeposit(depositDate, cashAccount, (decimal) amount, note);
         }
         /// <summary>
         /// Adds a new deposit record for a <b>Deposit Account</b>.<br/>
@@ -32,7 +32,7 @@ namespace PortfolioPerformanceTableHelper
         /// The cash account's currency is 
         /// to be already defined in the application. 
         /// </remarks>
-        public void AddDeposit(DepositAccount cashAccount, DateTime depositDate, decimal amount, string? note = null)
+        public void AddDeposit(DateTime depositDate, DepositAccount cashAccount, decimal amount, string? note = null)
         {
             int index = Table.AppendEmptyRecord();
             // set transaction type

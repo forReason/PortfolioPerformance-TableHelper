@@ -16,9 +16,9 @@ namespace PortfolioPerformanceTableHelper
         /// <remarks>
         /// YOU must ensure that the currency of the <see cref="Objects.Security"/> object (if provided) matches the currency of the cash account.
         /// </remarks>
-        public void AddTax(DepositAccount cashAccount, DateTime depositDate, double amount, Objects.Security? security = null, string? note = null)
+        public void AddTax(DateTime taxDate, DepositAccount cashAccount, double amount, Objects.Security? security = null, string? note = null)
         {
-            AddTax(cashAccount, depositDate, (decimal)amount, security, note);
+            AddTax(taxDate, cashAccount, (decimal)amount, security, note);
         }
         /// <summary>
         /// Adds a tax transaction to the Account Transactions table.
@@ -31,7 +31,7 @@ namespace PortfolioPerformanceTableHelper
         /// <remarks>
         /// YOU must ensure that the currency of the <see cref="Objects.Security"/> object (if provided) matches the currency of the cash account.
         /// </remarks>
-        public void AddTax(DepositAccount cashAccount, DateTime depositDate, decimal amount, Objects.Security? security = null ,string? note = null)
+        public void AddTax(DateTime taxDate, DepositAccount cashAccount, decimal amount, Objects.Security? security = null ,string? note = null)
         {
             int index = Table.AppendEmptyRecord();
             // set transaction type
@@ -39,7 +39,7 @@ namespace PortfolioPerformanceTableHelper
             // select account, currency is defined by account
             Table.SetCell(AccountTableHeaders.CashAccount.Name, index, cashAccount.Name);
             // set the time
-            SplitDateTime time = DateTimeHelper.Split(depositDate);
+            SplitDateTime time = DateTimeHelper.Split(taxDate);
             Table.SetCell(AccountTableHeaders.Date.Name, index, time.Date);
             Table.SetCell(AccountTableHeaders.Time.Name, index, time.Time);
             // set the amount
