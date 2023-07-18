@@ -7,12 +7,12 @@
     <Nullable>enable</Nullable>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
     <Title>PortfolioPerformance-TableHelper</Title>
-    <Description>This package helps you create csv Tables which can be imported to Portfolio performance</Description>
+    <Description>a simple, flexible library for creating CSV entries compatible with Portfolio Performance software. It streamlines transaction management for multiple transaction types and securities.</Description>
     <PackageIcon>package_icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/forReason/PortfolioPerformance-TableHelper</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>portfolio; performance; finances</PackageTags>
+    <PackageTags>portfolio; performance; finances; Portfolio-Management; Financial-Software; CSV; Transactions; Stocks; Securities; Investment; Accounting; Finance; Fintech; CSharp; .NET; Data-Processing; Open-Source; PortfolioPerformance</PackageTags>
     <PackageLicenseExpression>MIT-Modern-Variant</PackageLicenseExpression>
   </PropertyGroup>
 
