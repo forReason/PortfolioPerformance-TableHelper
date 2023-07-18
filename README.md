@@ -13,7 +13,7 @@ Contributions are welcomed! Feel free to submit pull requests or open issues.
 
 ## Usage Example
 
-The library provides methods to create account and portfolio transactions. 
+The library provides methods to create account and portfolio transactions.  
 Please note that the Library splits columns with a `;` so make sure to choose that as delimiting character in PortfolioPerformance. 
 
 Here are some examples:
