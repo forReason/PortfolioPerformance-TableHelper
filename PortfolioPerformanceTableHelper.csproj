@@ -14,6 +14,9 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>portfolio; performance; finances; Portfolio-Management; Financial-Software; CSV; Transactions; Stocks; Securities; Investment; Accounting; Finance; Fintech; CSharp; .NET; Data-Processing; Open-Source; PortfolioPerformance</PackageTags>
     <PackageLicenseExpression>MIT-Modern-Variant</PackageLicenseExpression>
+    <Copyright>Julian Bechtold</Copyright>
+    <Company>Kryptomine.ch</Company>
+    <Authors>Julian Bechtold, Kryptomine.ch</Authors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
