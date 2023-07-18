@@ -1,6 +1,6 @@
 # PortfolioPerformance-TableHelper
 
-PortfolioPerformance-TableHelper is a helper library for creating CSV entries compatible with Portfolio Performance, an open-source tool for calculating the performance of your stocks and bonds. This library simplifies the generation of CSV files for account and portfolio transactions.
+PortfolioPerformance-TableHelper is a helper library for creating CSV entries compatible with Portfolio Performance (https://github.com/buchen/portfolio), an open-source tool for calculating the performance of your stocks and bonds. This library simplifies the generation of CSV files for account and portfolio transactions.
 
 Contributions are welcomed! Feel free to submit pull requests or open issues.
 
