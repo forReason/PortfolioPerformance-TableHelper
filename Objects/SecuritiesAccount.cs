@@ -1,4 +1,4 @@
-﻿namespace PortfolioPerformance_TableHelper.Objects
+﻿namespace PortfolioPerformanceTableHelper.Objects
 {
     public struct SecuritiesAccount
     {

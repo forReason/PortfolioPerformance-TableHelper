@@ -1,4 +1,4 @@
-﻿namespace PortfolioPerformance_TableHelper.Objects
+﻿namespace PortfolioPerformanceTableHelper.Objects
 {
     /// <summary>
     /// this is an account holding CASH

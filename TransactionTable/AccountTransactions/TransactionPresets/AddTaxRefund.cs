@@ -1,4 +1,4 @@
-﻿using PortfolioPerformance_TableHelper.Objects;
+﻿using PortfolioPerformanceTableHelper.Objects;
 using System.Security.AccessControl;
 
 namespace PortfolioPerformanceTableHelper
