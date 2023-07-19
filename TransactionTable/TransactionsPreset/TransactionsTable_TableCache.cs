@@ -8,6 +8,90 @@ namespace PortfolioPerformanceTableHelper.TransactionTable.TransactionsPreset
         /// the dictionary containing all tables
         /// </summary>
         public Dictionary<int, Table> Tables { get; set; } = new Dictionary<int, Table>();
+        public Table? GetOldestTable()
+        {
+            // obtain oldest table from chache
+            int minValue = int.MaxValue;
+            foreach (int key in Tables.Keys)
+            {
+                if (key < minValue) minValue = key;
+            }
+            // check if newer Table exists in files
+            DateTime? timeInfo = null;
+            if (_TargetDirectory != null)
+            {
+                FileInfo[] files = _TargetDirectory.GetFiles();
+
+                foreach (FileInfo file in files)
+                {
+                    string filename = Path.GetFileNameWithoutExtension(file.Name);
+                    string date = filename.Split('_').Last();
+                    string[] parts = filename.Split("-");
+                    int year = int.Parse(parts[0]);
+                    int month = int.Parse(parts[1]);
+                    int key = year * 100 + month;
+                    if (key < minValue)
+                    {
+                        minValue = key;
+                        timeInfo = new DateTime(year, month, 1);
+                    }
+                }
+            }
+            // return table code
+            if (timeInfo != null)
+            {
+                return GetTable((DateTime)timeInfo);
+            }
+            else if (minValue != int.MaxValue)
+            {
+                return Tables[minValue];
+            }
+            return null;
+        }
+        /// <summary>
+        /// returns the most recent Table
+        /// </summary>
+        /// <returns></returns>
+        public Table? GetNewestTable()
+        {
+            // obtain newest table in the cache
+            int maxValue = int.MinValue;
+            foreach (int key in Tables.Keys)
+            {
+                if (key > maxValue) maxValue = key;
+            }
+            // check if newer Table exists in files
+            DateTime? timeInfo = null;
+            if (_TargetDirectory != null)
+            {
+                FileInfo[] files = _TargetDirectory.GetFiles();
+                
+                foreach (FileInfo file in files)
+                {
+                    string filename = Path.GetFileNameWithoutExtension(file.Name);
+                    string date = filename.Split('_').Last();
+                    string[] parts = filename.Split("-");
+                    int year = int.Parse(parts[0]);
+                    int month = int.Parse(parts[1]);
+                    int key = year * 100 + month;
+                    if (key > maxValue)
+                    {
+                        maxValue = key;
+                        timeInfo = new DateTime(year, month, 1);
+                    }
+                }
+            }
+            // return table code
+            if (timeInfo != null)
+            {
+                return GetTable((DateTime)timeInfo);
+            }
+            else if (maxValue != int.MinValue)
+            {
+                return Tables[maxValue];
+            }
+            return null;
+        }
         /// <summary>
         /// returns the table containing the specifiedDdateTime
         /// </summary>
