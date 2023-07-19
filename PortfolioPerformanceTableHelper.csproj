@@ -17,6 +17,11 @@
     <Copyright>Julian Bechtold</Copyright>
     <Company>Kryptomine.ch</Company>
     <Authors>Julian Bechtold, Kryptomine.ch</Authors>
+    <Version>1.1.0</Version>
+    <PackageReleaseNotes>- bugfix in add fee
+- added capability to split output files by month
+- documentation improvement
+- improved project maintainability</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
