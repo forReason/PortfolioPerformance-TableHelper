@@ -1,4 +1,6 @@
-﻿namespace PortfolioPerformanceTableHelper
+﻿using PortfolioPerformanceTableHelper.TransactionTable.TransactionsPreset;
+
+namespace PortfolioPerformanceTableHelper
 {
     /// <summary>
     /// This class specifically handles the organization and management of <b>`Securities Account`</b>-related transaction data.<br/><br/>
@@ -12,27 +14,14 @@
     /// financial computations. Its main responsibility is to facilitate the structuring and management of CSV tables for 
     /// import into the Portfolio Performance tool.
     /// </remarks>
-    public partial class PortfolioTransactionsTable
+    public partial class PortfolioTransactionsTable : TransactionsTable
     {
-        /// <summary>
-        /// Initializes a new instance of the PortfolioTransactionsTable class.
-        /// </summary>
-        public PortfolioTransactionsTable()
+        // Derived class specific properties, fields, and methods go here
+
+        public PortfolioTransactionsTable(FileInfo file, bool splitByMonths)
+            : base(file, splitByMonths, PortfolioTableHeaders.ToStringArray())
         {
-            Table = new QuickCsv.Net.Table_NS.Table();
-            Table.SetColumnNames(PortfolioTableHeaders.ToStringArray());
-        }
-        /// <summary>
-        /// Gets or sets the underlying QuickCsv.Net.Table_NS.Table.
-        /// </summary>
-        public QuickCsv.Net.Table_NS.Table Table { get; set; }
-        /// <summary>
-        /// Saves the table to a file.
-        /// </summary>
-        /// <param name="fileName">The path of the file to write to.</param>
-        public void Save(string fileName = "PortfolioTransactions.csv")
-        {
-            Table.WriteTableToFile(fileName);
+            // You can add more initialization here if necessary
         }
     }
 }

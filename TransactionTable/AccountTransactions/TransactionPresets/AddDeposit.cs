@@ -1,8 +1,10 @@
 ﻿using PortfolioPerformanceTableHelper.Objects;
+using PortfolioPerformanceTableHelper.TransactionTable.TransactionsPreset;
+using QuickCsv.Net.Table_NS;
 
 namespace PortfolioPerformanceTableHelper
 {
-    public partial class AccountTransactionsTable
+    public partial class AccountTransactionsTable : TransactionsTable
     {
         /// <summary>
         /// Adds a new deposit record for a <b>Deposit Account</b>.<br/>
@@ -34,21 +36,22 @@ namespace PortfolioPerformanceTableHelper
         /// </remarks>
         public void AddDeposit(DateTime depositDate, DepositAccount cashAccount, decimal amount, string? note = null)
         {
-            int index = Table.AppendEmptyRecord();
+            Table table = GetTable(depositDate);
+            int index = table.AppendEmptyRecord();
             // set transaction type
-            Table.SetCell(AccountTableHeaders.Type.Name, index, AccountTransactionTypes.Deposit.Name);
+            table.SetCell(AccountTableHeaders.Type.Name, index, AccountTransactionTypes.Deposit.Name);
             // select account, currency is defined by account
-            Table.SetCell(AccountTableHeaders.CashAccount.Name, index, cashAccount.Name);
+            table.SetCell(AccountTableHeaders.CashAccount.Name, index, cashAccount.Name);
             // set the time
             SplitDateTime time = DateTimeHelper.Split(depositDate);
-            Table.SetCell(AccountTableHeaders.Date.Name, index, time.Date);
-            Table.SetCell(AccountTableHeaders.Time.Name, index, time.Time);
+            table.SetCell(AccountTableHeaders.Date.Name, index, time.Date);
+            table.SetCell(AccountTableHeaders.Time.Name, index, time.Time);
             // set the amount
-            Table.SetCell(AccountTableHeaders.Value.Name, index, amount.ToString("G"));
+            table.SetCell(AccountTableHeaders.Value.Name, index, amount.ToString("G"));
             // set the notes
             if (!string.IsNullOrEmpty(note))
             {
-                Table.SetCell(AccountTableHeaders.Note.Name, index, note);
+                table.SetCell(AccountTableHeaders.Note.Name, index, note);
             }
         }
     }

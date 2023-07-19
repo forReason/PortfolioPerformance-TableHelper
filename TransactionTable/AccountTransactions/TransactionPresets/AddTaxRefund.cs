@@ -1,15 +1,17 @@
 ﻿using PortfolioPerformanceTableHelper.Objects;
+using PortfolioPerformanceTableHelper.TransactionTable.TransactionsPreset;
+using QuickCsv.Net.Table_NS;
 using System.Security.AccessControl;
 
 namespace PortfolioPerformanceTableHelper
 {
-    public partial class AccountTransactionsTable
+    public partial class AccountTransactionsTable : TransactionsTable
     {
         /// <summary>
         /// Adds a tax transaction to the Account Transactions table.
         /// </summary>
+        /// <param name="taxDate">The date of the tax transaction.</param>
         /// <param name="cashAccount">The cash account associated with the tax transaction.</param>
-        /// <param name="depositDate">The date of the tax transaction.</param>
         /// <param name="amount">The amount of the tax transaction.</param>
         /// <param name="security">An optional <see cref="Objects.Security"/> object representing the security associated with the tax transaction.</param>
         /// <param name="note">An optional note related to the tax transaction.</param>
@@ -23,8 +25,8 @@ namespace PortfolioPerformanceTableHelper
         /// <summary>
         /// Adds a tax transaction to the Account Transactions table.
         /// </summary>
+        /// <param name="taxDate">The date of the tax transaction.</param>
         /// <param name="cashAccount">The cash account associated with the tax transaction.</param>
-        /// <param name="depositDate">The date of the tax transaction.</param>
         /// <param name="amount">The amount of the tax transaction.</param>
         /// <param name="security">An optional <see cref="Objects.Security"/> object representing the security associated with the tax transaction.</param>
         /// <param name="note">An optional note related to the tax transaction.</param>
@@ -33,42 +35,43 @@ namespace PortfolioPerformanceTableHelper
         /// </remarks>
         public void AddTaxRefund(DateTime taxDate, DepositAccount cashAccount, decimal amount, Objects.Security? security = null ,string? note = null)
         {
-            int index = Table.AppendEmptyRecord();
+            Table table = GetTable(taxDate);
+            int index = table.AppendEmptyRecord();
             // set transaction type
-            Table.SetCell(AccountTableHeaders.Type.Name, index, AccountTransactionTypes.TaxRefund.Name);
+            table.SetCell(AccountTableHeaders.Type.Name, index, AccountTransactionTypes.TaxRefund.Name);
             // select account, currency is defined by account
-            Table.SetCell(AccountTableHeaders.CashAccount.Name, index, cashAccount.Name);
+            table.SetCell(AccountTableHeaders.CashAccount.Name, index, cashAccount.Name);
             // set the time
             SplitDateTime time = DateTimeHelper.Split(taxDate);
-            Table.SetCell(AccountTableHeaders.Date.Name, index, time.Date);
-            Table.SetCell(AccountTableHeaders.Time.Name, index, time.Time);
+            table.SetCell(AccountTableHeaders.Date.Name, index, time.Date);
+            table.SetCell(AccountTableHeaders.Time.Name, index, time.Time);
             // set the amount
-            Table.SetCell(AccountTableHeaders.Value.Name, index, ((decimal)amount).ToString("G"));
+            table.SetCell(AccountTableHeaders.Value.Name, index, ((decimal)amount).ToString("G"));
             // set the security
             if (security != null)
             {
                 if (security.ISIN != null)
                 {
-                    Table.SetCell(AccountTableHeaders.ISIN.Name, index, security.ISIN);
+                    table.SetCell(AccountTableHeaders.ISIN.Name, index, security.ISIN);
                 }
                 if (security.WKN != null)
                 {
-                    Table.SetCell(AccountTableHeaders.WKN.Name, index, security.WKN);
+                    table.SetCell(AccountTableHeaders.WKN.Name, index, security.WKN);
                 }
                 if (security.TickerSymbol != null)
                 {
-                    Table.SetCell(AccountTableHeaders.Symbol.Name, index, security.TickerSymbol);
+                    table.SetCell(AccountTableHeaders.Symbol.Name, index, security.TickerSymbol);
                 }
                 if (security.Name != null)
                 {
-                    Table.SetCell(AccountTableHeaders.SecurityName.Name, index, security.Name);
+                    table.SetCell(AccountTableHeaders.SecurityName.Name, index, security.Name);
                 }
-                Table.SetCell(AccountTableHeaders.TransactionCurrency.Name, index, security.ReferenceCurrency);
+                table.SetCell(AccountTableHeaders.TransactionCurrency.Name, index, security.ReferenceCurrency);
             }
             // set the notes
             if (!string.IsNullOrEmpty(note))
             {
-                Table.SetCell(AccountTableHeaders.Note.Name, index, note);
+                table.SetCell(AccountTableHeaders.Note.Name, index, note);
             }
         }
     }

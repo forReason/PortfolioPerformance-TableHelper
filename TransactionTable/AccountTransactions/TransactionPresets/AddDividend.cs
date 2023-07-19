@@ -1,15 +1,17 @@
 ﻿using PortfolioPerformanceTableHelper.Objects;
+using PortfolioPerformanceTableHelper.TransactionTable.TransactionsPreset;
+using QuickCsv.Net.Table_NS;
 
 namespace PortfolioPerformanceTableHelper
 {
-    public partial class AccountTransactionsTable
+    public partial class AccountTransactionsTable : TransactionsTable
     {
         /// <summary>
         /// Adds a dividend transaction to the Account Transactions table.
         /// </summary>
+        /// <param name="dividendDate">The date when the dividend was credited to the account.</param>
         /// <param name="cashAccount">The account credited with the dividend.</param>
         /// <param name="security">The security that generated the dividend.</param>
-        /// <param name="depositDate">The date when the dividend was credited to the account.</param>
         /// <param name="shareAmount">The number of shares that generated the dividend.</param>
         /// <param name="creditNote">The amount credited to the account, after taxes and fees deduction.</param>
         /// <param name="fees">Any fees associated with the dividend transaction. Defaults to 0.</param>
@@ -36,9 +38,9 @@ namespace PortfolioPerformanceTableHelper
         /// <summary>
         /// Adds a dividend transaction to the Account Transactions table.
         /// </summary>
+        /// <param name="dividendDate">The date when the dividend was credited to the account.</param>
         /// <param name="cashAccount">The account credited with the dividend.</param>
         /// <param name="security">The security that generated the dividend.</param>
-        /// <param name="depositDate">The date when the dividend was credited to the account.</param>
         /// <param name="shareAmount">The number of shares that generated the dividend.</param>
         /// <param name="creditNote">The amount credited to the account, after taxes and fees deduction.</param>
         /// <param name="fees">Any fees associated with the dividend transaction. Defaults to 0.</param>
@@ -57,47 +59,48 @@ namespace PortfolioPerformanceTableHelper
             decimal shareAmount, decimal creditNote, decimal fees = 0, decimal taxes = 0,
             string? note = null)
         {
-            int index = Table.AppendEmptyRecord();
+            Table table = GetTable(dividendDate);
+            int index = table.AppendEmptyRecord();
             // set transaction type
-            Table.SetCell(AccountTableHeaders.Type.Name, index, AccountTransactionTypes.Dividend.Name);
+            table.SetCell(AccountTableHeaders.Type.Name, index, AccountTransactionTypes.Dividend.Name);
             // select account, currency is defined by account
-            Table.SetCell(AccountTableHeaders.CashAccount.Name, index, cashAccount.Name);
+            table.SetCell(AccountTableHeaders.CashAccount.Name, index, cashAccount.Name);
             // set the time
             SplitDateTime time = DateTimeHelper.Split(dividendDate);
-            Table.SetCell(AccountTableHeaders.Date.Name, index, time.Date);
-            Table.SetCell(AccountTableHeaders.Time.Name, index, time.Time);
+            table.SetCell(AccountTableHeaders.Date.Name, index, time.Date);
+            table.SetCell(AccountTableHeaders.Time.Name, index, time.Time);
             // set the security
             if (security != null)
             {
                 if (security.ISIN != null)
                 {
-                    Table.SetCell(AccountTableHeaders.ISIN.Name, index, security.ISIN);
+                    table.SetCell(AccountTableHeaders.ISIN.Name, index, security.ISIN);
                 }
                 if (security.WKN != null)
                 {
-                    Table.SetCell(AccountTableHeaders.WKN.Name, index, security.WKN);
+                    table.SetCell(AccountTableHeaders.WKN.Name, index, security.WKN);
                 }
                 if (security.TickerSymbol != null)
                 {
-                    Table.SetCell(AccountTableHeaders.Symbol.Name, index, security.TickerSymbol);
+                    table.SetCell(AccountTableHeaders.Symbol.Name, index, security.TickerSymbol);
                 }
                 if (security.Name != null)
                 {
-                    Table.SetCell(AccountTableHeaders.SecurityName.Name, index, security.Name);
+                    table.SetCell(AccountTableHeaders.SecurityName.Name, index, security.Name);
                 }
-                Table.SetCell(AccountTableHeaders.TransactionCurrency.Name, index, security.ReferenceCurrency);
+                table.SetCell(AccountTableHeaders.TransactionCurrency.Name, index, security.ReferenceCurrency);
             }
             // set the amount
-            Table.SetCell(AccountTableHeaders.ShareAmount.Name, index, shareAmount.ToString("G"));
-            Table.SetCell(AccountTableHeaders.Value.Name, index, creditNote.ToString("G"));
+            table.SetCell(AccountTableHeaders.ShareAmount.Name, index, shareAmount.ToString("G"));
+            table.SetCell(AccountTableHeaders.Value.Name, index, creditNote.ToString("G"));
             // set fees
-            Table.SetCell(AccountTableHeaders.Fees.Name, index, fees.ToString("G"));
+            table.SetCell(AccountTableHeaders.Fees.Name, index, fees.ToString("G"));
             // set taxes
-            Table.SetCell(AccountTableHeaders.Taxes.Name, index, taxes.ToString("G"));
+            table.SetCell(AccountTableHeaders.Taxes.Name, index, taxes.ToString("G"));
             // set the notes
             if (!string.IsNullOrEmpty(note))
             {
-                Table.SetCell(AccountTableHeaders.Note.Name, index, note);
+                table.SetCell(AccountTableHeaders.Note.Name, index, note);
             }
         }
     }

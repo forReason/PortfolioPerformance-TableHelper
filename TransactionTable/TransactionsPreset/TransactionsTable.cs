@@ -1,7 +1,5 @@
 ﻿
-using PortfolioPerformanceTableHelper.TransactionTable.TransactionsPreset;
-
-namespace PortfolioPerformanceTableHelper
+namespace PortfolioPerformanceTableHelper.TransactionTable.TransactionsPreset
 {
     /// <summary>
     /// This class specifically handles the organization and management of <b>`Deposit Account`</b>-related transaction data.<br/><br/>
@@ -15,14 +13,25 @@ namespace PortfolioPerformanceTableHelper
     /// computations. Its main responsibility is to facilitate the structuring and management of CSV tables for import into 
     /// the Portfolio Performance tool.
     /// </remarks>
-    public partial class AccountTransactionsTable : TransactionsTable
+    public partial class TransactionsTable
     {
-        // Derived class specific properties, fields, and methods go here
-
-        public AccountTransactionsTable(FileInfo file, bool splitByMonths)
-            : base(file, splitByMonths, AccountTableHeaders.ToStringArray())
+        /// <summary>
+        /// Initializes a new instance of the AccountTransactionsTable class.
+        /// </summary>
+        public TransactionsTable(FileInfo file, bool splitByMonths, string[] headers)
         {
-            // You can add more initialization here if necessary
+            _SplitByMonth = splitByMonths;
+            _FileNameWithoutExtension = Path.GetFileNameWithoutExtension(file.Name);
+            GenerateDirectory(file);
+            _Headers = headers;
         }
+        /// <summary>
+        /// defines if the files should be split by month value
+        /// </summary>
+        private bool _SplitByMonth { get; set; }
+        /// <summary>
+        /// defines the headers of the table
+        /// </summary>
+        private string[] _Headers { get; set; }
     }
 }

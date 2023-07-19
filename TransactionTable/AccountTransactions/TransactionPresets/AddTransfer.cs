@@ -1,53 +1,17 @@
 ﻿using PortfolioPerformanceTableHelper.Objects;
+using PortfolioPerformanceTableHelper.TransactionTable.TransactionsPreset;
+using QuickCsv.Net.Table_NS;
 
 namespace PortfolioPerformanceTableHelper
 {
-    public partial class AccountTransactionsTable
+    public partial class AccountTransactionsTable : TransactionsTable
     {
-        /// <summary>
-        /// Adds two corresponding transfer transactions to the Account Transactions table, representing a transfer of funds from a source account to a target account.
-        /// </summary>
-        /// <param name="sourceAccount">The account from which funds are transferred.</param>
-        /// <param name="targetAccount">The account to which funds are transferred.</param>
-        /// <param name="depositDate">The date of the transfer transaction.</param>
-        /// <param name="sourceAmount">The amount being transferred in the source account's currency.</param>
-        /// <param name="targetAmount">The conversion rate applied to the amount to represent the value in the target account's currency.</param>
-        /// <param name="note">An optional note related to the transfer transaction.</param>
-        /// <remarks>
-        /// This method facilitates the recording of a transfer of funds between two accounts. This is represented by two transactions: 
-        /// an outbound transfer from the source account and an inbound transfer to the target account. The method handles currency 
-        /// conversion, if required, by multiplying the amount by the specified conversion rate to determine the value that is credited to the target account.
-        /// </remarks>
-        //public void AddTransfer(DateTime transferDate, DepositAccount sourceAccount, DepositAccount targetAccount, double sourceAmount, double targetAmount, string? note = null)
-        //{
-        //    AddTransfer(transferDate, TransferType.Outbound, sourceAccount,  sourceAmount, note);
-        //    AddTransfer(transferDate, TransferType.Inbound, targetAccount, targetAmount, note);
-        //}
-        /// <summary>
-        /// Adds two corresponding transfer transactions to the Account Transactions table, representing a transfer of funds from a source account to a target account.
-        /// </summary>
-        /// <param name="sourceAccount">The account from which funds are transferred.</param>
-        /// <param name="targetAccount">The account to which funds are transferred.</param>
-        /// <param name="depositDate">The date of the transfer transaction.</param>
-        /// <param name="sourceAmount">The amount being transferred in the source account's currency.</param>
-        /// <param name="targetAmount">The conversion rate applied to the amount to represent the value in the target account's currency.</param>
-        /// <param name="note">An optional note related to the transfer transaction.</param>
-        /// <remarks>
-        /// This method facilitates the recording of a transfer of funds between two accounts. This is represented by two transactions: 
-        /// an outbound transfer from the source account and an inbound transfer to the target account. The method handles currency 
-        /// conversion, if required, by multiplying the amount by the specified conversion rate to determine the value that is credited to the target account.
-        /// </remarks>
-        //public void AddTransfer(DateTime transferDate, DepositAccount sourceAccount, DepositAccount targetAccount,  decimal sourceAmount, decimal targetAmount, string? note = null)
-        //{
-        //    AddTransfer(transferDate, TransferType.Outbound, sourceAccount,  sourceAmount, note);
-        //    AddTransfer(transferDate, TransferType.Inbound, targetAccount,  targetAmount, note);
-        //}
         /// <summary>
         /// Adds a transfer transaction to the Account Transactions table.
         /// </summary>
-        /// <param name="type">The type of transfer, either inbound or outbound.</param>
-        /// <param name="account">The account associated with the transfer transaction.</param>
-        /// <param name="depositDate">The date of the transfer transaction.</param>
+        /// <param name="transferDate">The date of the transfer transaction.</param>
+        /// <param name="sourceAccount">The account where the transaction is sent from.</param>
+        /// <param name="targetAccount">The account where the transaction is sent to.</param>
         /// <param name="amount">The amount of the transfer transaction.</param>
         /// <param name="note">An optional note related to the transfer transaction.</param>
         /// <remarks>
@@ -66,9 +30,9 @@ namespace PortfolioPerformanceTableHelper
         /// <summary>
         /// Adds a transfer transaction to the Account Transactions table.
         /// </summary>
-        /// <param name="type">The type of transfer, either inbound or outbound.</param>
-        /// <param name="account">The account associated with the transfer transaction.</param>
-        /// <param name="depositDate">The date of the transfer transaction.</param>
+        /// <param name="transferDate">The date of the transfer transaction.</param>
+        /// <param name="sourceAccount">The account where the transaction is sent from.</param>
+        /// <param name="targetAccount">The account where the transaction is sent to.</param>
         /// <param name="amount">The amount of the transfer transaction.</param>
         /// <param name="note">An optional note related to the transfer transaction.</param>
         /// <remarks>
@@ -82,23 +46,24 @@ namespace PortfolioPerformanceTableHelper
         public void AddTransfer(DateTime transferDate, DepositAccount sourceAccount, DepositAccount targetAccount,
             decimal amount, string? note = null)
         {
-            int index = Table.AppendEmptyRecord();
+            Table table = GetTable(transferDate);
+            int index = table.AppendEmptyRecord();
             // set Transaction Type
-            Table.SetCell(AccountTableHeaders.Type.Name, index, AccountTransactionTypes.TransferOutbound.Name);
+            table.SetCell(AccountTableHeaders.Type.Name, index, AccountTransactionTypes.TransferOutbound.Name);
             // select account, currency is defined by account
-            Table.SetCell(AccountTableHeaders.CashAccount.Name, index, sourceAccount.Name);
-            Table.SetCell(AccountTableHeaders.OffsetAccount.Name, index, targetAccount.Name);
+            table.SetCell(AccountTableHeaders.CashAccount.Name, index, sourceAccount.Name);
+            table.SetCell(AccountTableHeaders.OffsetAccount.Name, index, targetAccount.Name);
             // set the time
             SplitDateTime time = DateTimeHelper.Split(transferDate);
-            Table.SetCell(AccountTableHeaders.Date.Name, index, time.Date);
-            Table.SetCell(AccountTableHeaders.Time.Name, index, time.Time);
+            table.SetCell(AccountTableHeaders.Date.Name, index, time.Date);
+            table.SetCell(AccountTableHeaders.Time.Name, index, time.Time);
             // set the amount
-            Table.SetCell(AccountTableHeaders.Value.Name, index, (-amount).ToString("G"));
+            table.SetCell(AccountTableHeaders.Value.Name, index, (-amount).ToString("G"));
 
             // set the notes
             if (!string.IsNullOrEmpty(note))
             {
-                Table.SetCell(AccountTableHeaders.Note.Name, index, note);
+                table.SetCell(AccountTableHeaders.Note.Name, index, note);
             }
         }
     }
