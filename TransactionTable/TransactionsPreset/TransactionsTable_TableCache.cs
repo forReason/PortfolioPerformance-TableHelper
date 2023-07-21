@@ -1,4 +1,6 @@
 ﻿using QuickCsv.Net.Table_NS;
+using System;
+using System.Globalization;
 
 namespace PortfolioPerformanceTableHelper.TransactionTable.TransactionsPreset
 {
@@ -18,7 +20,7 @@ namespace PortfolioPerformanceTableHelper.TransactionTable.TransactionsPreset
             }
             // check if newer Table exists in files
             DateTime? timeInfo = null;
-            if (_TargetDirectory != null)
+            if (_TargetDirectory != null && _TargetDirectory.Exists)
             {
                 FileInfo[] files = _TargetDirectory.GetFiles();
 
@@ -62,7 +64,7 @@ namespace PortfolioPerformanceTableHelper.TransactionTable.TransactionsPreset
             }
             // check if newer Table exists in files
             DateTime? timeInfo = null;
-            if (_TargetDirectory != null)
+            if (_TargetDirectory != null && _TargetDirectory.Exists)
             {
                 FileInfo[] files = _TargetDirectory.GetFiles();
                 
@@ -130,6 +132,75 @@ namespace PortfolioPerformanceTableHelper.TransactionTable.TransactionsPreset
                 }
             }
         }
+        /// <summary>
+        /// Gets the most recent date and time entry from the newest table.
+        /// </summary>
+        /// <returns>
+        /// The most recent <see cref="DateTime"/> entry from the newest table, 
+        /// or <see langword="null"/> if the table doesn't exist. 
+        /// </returns>
+        /// <exception cref="InvalidDataException">
+        /// Throws an <see cref="InvalidDataException"/> if a date and time string cannot be parsed into a <see cref="DateTime"/> object.
+        /// </exception>
+        public DateTime? GetNewestEntryTime()
+        {
+            Table? newestTable = GetNewestTable();
+            if (newestTable == null) return null;
+            DateTime newestTime = DateTime.MinValue;
+            int timeColumn = newestTable.GetColumnIndex(AccountTableHeaders.Time.Name);
+            int dateColumn = newestTable.GetColumnIndex(AccountTableHeaders.Date.Name);
+            for (int i = 0; i < newestTable.Length; i++)
+            {
+                // set the time
+                string dateString = newestTable.GetCell(row: i, column: dateColumn);
+                string timeString = newestTable.GetCell(row: i, column: timeColumn);
+                string dateTime = $"{dateString} {timeString}";
+                if (DateTime.TryParseExact(dateTime, "yyyy/MM/dd HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime outputDateTime))
+                {
+                    if (outputDateTime > newestTime) newestTime = outputDateTime;
+                }
+                else
+                {
+                    throw new InvalidDataException("DateTime could not be parsed!");
+                }
+            }
+            return newestTime;
+        }
+        /// <summary>
+        /// Gets the oldest date and time entry from the oldest table.
+        /// </summary>
+        /// <returns>
+        /// The oldest <see cref="DateTime"/> entry from the oldest table, 
+        /// or <see langword="null"/> if the table doesn't exist. 
+        /// </returns>
+        /// <exception cref="InvalidDataException">
+        /// Throws an <see cref="InvalidDataException"/> if a date and time string cannot be parsed into a <see cref="DateTime"/> object.
+        /// </exception>
+        public DateTime? GetOldestEntryTime()
+        {
+            Table oldestTable = GetOldestTable(); // use a function that retrieves the oldest table
+            if (oldestTable == null) return null;
+            DateTime oldestTime = DateTime.MaxValue;
+            int timeColumn = oldestTable.GetColumnIndex(AccountTableHeaders.Time.Name);
+            int dateColumn = oldestTable.GetColumnIndex(AccountTableHeaders.Date.Name);
+            for (int i = 0; i < oldestTable.Length; i++)
+            {
+                // set the time
+                string dateString = oldestTable.GetCell(row: i, column: dateColumn);
+                string timeString = oldestTable.GetCell(row: i, column: timeColumn);
+                string dateTime = $"{dateString} {timeString}";
+                if (DateTime.TryParseExact(dateTime, "yyyy/MM/dd HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime outputDateTime))
+                {
+                    if (outputDateTime < oldestTime) oldestTime = outputDateTime;
+                }
+                else
+                {
+                    throw new InvalidDataException("DateTime could not be parsed!");
+                }
+            }
+            return oldestTime == DateTime.MaxValue ? (DateTime?)null : oldestTime;
+        }
+
         /// <summary>
         /// Saves the table to a file.
         /// </summary>

@@ -17,8 +17,12 @@
     <Copyright>Julian Bechtold</Copyright>
     <Company>Kryptomine.ch</Company>
     <Authors>Julian Bechtold, Kryptomine.ch</Authors>
-    <Version>1.1.0</Version>
-    <PackageReleaseNotes>- bugfix in add fee
+    <Version>1.1.1</Version>
+    <PackageReleaseNotes>1.1.1:
+- added capability to store histories into monthly split files in order to conserve memory requirements
+
+1.1.0:
+- bugfix in add fee
 - added capability to split output files by month
 - documentation improvement
 - improved project maintainability</PackageReleaseNotes>
