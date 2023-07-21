@@ -17,8 +17,12 @@
     <Copyright>Julian Bechtold</Copyright>
     <Company>Kryptomine.ch</Company>
     <Authors>Julian Bechtold, Kryptomine.ch</Authors>
-    <Version>1.1.1</Version>
-    <PackageReleaseNotes>1.1.1:
+    <Version>1.1.2</Version>
+    <PackageReleaseNotes>1.1.2:
+- added capability to retrieve the oldest and newest entry date
+- fixed a crasn with GetNewestTable() and GetOldestTable when no table was written to disk yet.
+
+1.1.1:
 - added capability to store histories into monthly split files in order to conserve memory requirements
 
 1.1.0:
