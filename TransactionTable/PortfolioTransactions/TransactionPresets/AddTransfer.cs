@@ -36,7 +36,7 @@ namespace PortfolioPerformanceTableHelper
         /// <param name="note">Any additional notes about the transfer.</param>
         public void AddTransfer(DateTime transferDate, 
             SecuritiesAccount sourceAccount, SecuritiesAccount targetAccount, Security security, 
-            decimal shares, decimal transactionValue, decimal fees = 0, string? note = null)
+            decimal shares, decimal transactionValue = 0m, decimal fees = 0, string? note = null)
         {
             Table table = GetTable(transferDate);
             int index = table.AppendEmptyRecord();
