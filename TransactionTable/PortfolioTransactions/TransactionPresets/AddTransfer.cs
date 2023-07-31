@@ -17,12 +17,14 @@ namespace PortfolioPerformanceTableHelper
         /// <param name="transactionValue">The transaction value of the transferred shares. The value represents the price per share multiplied by the amount of shares at the time of the transfer.</param>
         /// <param name="fees">Any fees associated with the transfer, defaults to 0 if not provided.</param>
         /// <param name="note">Any additional notes about the transfer.</param>
-        public void AddTransfer(DateTime transferDate, 
-            SecuritiesAccount sourceAccount, SecuritiesAccount targetAccount, Security security, 
-            double shares, double transactionValue = 0, double fees = 0,string? note = null)
+        public void AddTransfer(DateTime transferDate,
+        SecuritiesAccount sourceAccount, SecuritiesAccount targetAccount, Security security,
+        double shares, double transactionValue = 0, double fees = 0, string? note = null)
         {
-            AddTransfer(transferDate, sourceAccount, targetAccount,security, shares, transactionValue, fees, note);
+            AddTransfer(transferDate, sourceAccount, targetAccount, security,
+                (decimal)shares, (decimal)transactionValue, (decimal)fees, note);
         }
+
         /// <summary>
         /// Adds a transfer of securities between accounts.
         /// </summary>
