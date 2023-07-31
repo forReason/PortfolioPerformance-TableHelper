@@ -28,7 +28,7 @@ namespace PortfolioPerformanceTableHelper.TransactionTable.TransactionsPreset
                 {
                     string filename = Path.GetFileNameWithoutExtension(file.Name);
                     string date = filename.Split('_').Last();
-                    string[] parts = filename.Split("-");
+                    string[] parts = date.Split("-");
                     int year = int.Parse(parts[0]);
                     int month = int.Parse(parts[1]);
                     int key = year * 100 + month;
@@ -126,7 +126,7 @@ namespace PortfolioPerformanceTableHelper.TransactionTable.TransactionsPreset
                 else
                 {
                     Table newTable = new Table(target: tableFile);
-                    newTable.SetColumnNames(AccountTableHeaders.ToStringArray());
+                    newTable.SetColumnNames(_Headers);
                     Tables[index] = newTable;
                     return newTable;
                 }
