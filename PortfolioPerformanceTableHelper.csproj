@@ -17,8 +17,19 @@
     <Copyright>Julian Bechtold</Copyright>
     <Company>Kryptomine.ch</Company>
     <Authors>Julian Bechtold, Kryptomine.ch</Authors>
-    <Version>1.1.4</Version>
-    <PackageReleaseNotes>1.1.4
+    <Version>1.2.0</Version>
+    <PackageReleaseNotes>1.2.0
+added capability to keep table sorted. Tis option defaults to false as it is mainly optional. Portfolio Performance will read tables which are unsiorted.
+- note 1: this option likely comes with big performance implications
+- note 2: might cause issues on existing, unsorted tables, 
+- note 3: might cause issues when reversing tables and adding entries on reversed table
+- note 4: might cause issues when modifying the underlying table manually and not regarding sorting
+
+1.1.5
+- final documentation cleanups
+- cleanup of compiler suggestions
+
+1.1.4
 - Improved documentation on DateTimeHelper
 - Added merge function for DateTimeHelper to allow back conversion
 - Path naming correction
