@@ -23,7 +23,7 @@ namespace PortfolioPerformanceTableHelper
         /// <param name="file"></param>
         /// <param name="splitByMonths"></param>
         /// <param name="keepTimeSorted"></param>
-        public AccountTransactionsTable(FileInfo file, bool splitByMonths, bool keepTimeSorted = true)
+        public AccountTransactionsTable(FileInfo file, bool splitByMonths, bool keepTimeSorted = false)
             : base(file, splitByMonths, AccountTableHeaders.ToStringArray(), keepTimeSorted)
         {
             // You can add more initialization here if necessary

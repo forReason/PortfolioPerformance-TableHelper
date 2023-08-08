@@ -18,7 +18,7 @@ namespace PortfolioPerformanceTableHelper.TransactionTable.TransactionsPreset
         /// <summary>
         /// Initializes a new instance of the AccountTransactionsTable class.
         /// </summary>
-        public TransactionsTable(FileInfo file, bool splitByMonths, string[] headers, bool keepTableTimeSorted = true)
+        public TransactionsTable(FileInfo file, bool splitByMonths, string[] headers, bool keepTableTimeSorted = false)
         {
             _SplitByMonth = splitByMonths;
             _FileNameWithoutExtension = Path.GetFileNameWithoutExtension(file.Name);

@@ -18,7 +18,7 @@ namespace PortfolioPerformanceTableHelper
     {
         // Derived class specific properties, fields, and methods go here
 
-        public PortfolioTransactionsTable(FileInfo file, bool splitByMonths, bool keepTimeSorted = true)
+        public PortfolioTransactionsTable(FileInfo file, bool splitByMonths, bool keepTimeSorted = false)
             : base(file, splitByMonths, PortfolioTableHeaders.ToStringArray(), keepTimeSorted)
         {
             // You can add more initialization here if necessary
