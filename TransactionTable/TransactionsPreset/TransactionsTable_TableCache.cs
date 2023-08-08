@@ -154,15 +154,8 @@ namespace PortfolioPerformanceTableHelper.TransactionTable.TransactionsPreset
                 // set the time
                 string dateString = newestTable.GetCell(row: i, column: dateColumn);
                 string timeString = newestTable.GetCell(row: i, column: timeColumn);
-                string dateTime = $"{dateString} {timeString}";
-                if (DateTime.TryParseExact(dateTime, "yyyy/MM/dd HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime outputDateTime))
-                {
-                    if (outputDateTime > newestTime) newestTime = outputDateTime;
-                }
-                else
-                {
-                    throw new InvalidDataException("DateTime could not be parsed!");
-                }
+                DateTime dateTime = DateTimeHelper.Merge(dateString, timeString);
+                if (dateTime > newestTime) newestTime = dateTime;
             }
             return newestTime;
         }
@@ -188,15 +181,8 @@ namespace PortfolioPerformanceTableHelper.TransactionTable.TransactionsPreset
                 // set the time
                 string dateString = oldestTable.GetCell(row: i, column: dateColumn);
                 string timeString = oldestTable.GetCell(row: i, column: timeColumn);
-                string dateTime = $"{dateString} {timeString}";
-                if (DateTime.TryParseExact(dateTime, "yyyy/MM/dd HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime outputDateTime))
-                {
-                    if (outputDateTime < oldestTime) oldestTime = outputDateTime;
-                }
-                else
-                {
-                    throw new InvalidDataException("DateTime could not be parsed!");
-                }
+                DateTime dateTime = DateTimeHelper.Merge(dateString, timeString);
+                if (dateTime < oldestTime) oldestTime = dateTime;
             }
             return oldestTime == DateTime.MaxValue ? (DateTime?)null : oldestTime;
         }
