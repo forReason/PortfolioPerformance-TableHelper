@@ -1,8 +1,5 @@
 ﻿using PortfolioPerformanceTableHelper.Objects;
-using PortfolioPerformanceTableHelper.Objects;
 using QuickCsv.Net.Table_NS;
-using System.Diagnostics;
-using System.Reflection.Metadata.Ecma335;
 
 namespace PortfolioPerformanceTableHelper
 {

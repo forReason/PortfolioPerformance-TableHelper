@@ -1,9 +1,14 @@
 ﻿namespace PortfolioPerformanceTableHelper
 {
+    /// <summary>
+    /// is a stringable-enum
+    /// </summary>
     public class AccountTableHeaders
     {
         private AccountTableHeaders(string name) { Name = name; }
-
+        /// <summary>
+        /// returns the string representation of the enumable
+        /// </summary>
         public string Name { get; private set; }
 
         /// <summary>
@@ -101,12 +106,19 @@
         /// </summary>
         public static AccountTableHeaders CashAccount => new AccountTableHeaders("Cash Account");
 
-
+        /// <summary>
+        /// returns all available AccountTableHeaders as array
+        /// </summary>
+        /// <returns></returns>
         public static AccountTableHeaders[] ToArray()
         {
             return new AccountTableHeaders[] { Date, Time,Type,WKN,ISIN,Symbol,SecurityName, ShareAmount,CurrencyGrossAmount,GrossAmount,
                 TransactionCurrency,Value,ExchangeRate,Fees,Taxes,Note,SecuritiesAccount,OffsetAccount,CashAccount };
         }
+        /// <summary>
+        /// returns all available AccountTableHeaders as string array
+        /// </summary>
+        /// <returns></returns>
         public static string[] ToStringArray()
         {
             List<string> list = new List<string>();
@@ -116,6 +128,10 @@
             }
             return list.ToArray();
         }
+        /// <summary>
+        /// returns the string representation of this type
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return Name;

@@ -17,8 +17,12 @@ namespace PortfolioPerformanceTableHelper
     /// </remarks>
     public partial class AccountTransactionsTable : TransactionsTable
     {
-        // Derived class specific properties, fields, and methods go here
-
+        /// <summary>
+        /// creates a new AccountTransactionsTable from the base class TransactionsTable
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="splitByMonths"></param>
+        /// <param name="keepTimeSorted"></param>
         public AccountTransactionsTable(FileInfo file, bool splitByMonths, bool keepTimeSorted = true)
             : base(file, splitByMonths, AccountTableHeaders.ToStringArray(), keepTimeSorted)
         {

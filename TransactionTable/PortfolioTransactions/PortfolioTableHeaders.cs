@@ -1,9 +1,15 @@
 ﻿namespace PortfolioPerformanceTableHelper
 {
+    /// <summary>
+    /// is a string-able enum representation of the table headers
+    /// </summary>
     public class PortfolioTableHeaders
     {
         private PortfolioTableHeaders(string name) { Name = name; }
 
+        /// <summary>
+        /// Gets the string representation of the Table Header.
+        /// </summary>
         public string Name { get; private set; }
         /// <summary>
         /// Represents the date of the transaction. This field should contain a valid date in the format yyyy-MM-dd.
@@ -100,12 +106,19 @@
         /// </summary>
         public static PortfolioTableHeaders CashAccount => new PortfolioTableHeaders("Cash Account");
 
-
+        /// <summary>
+        /// returns an array of all availble Portfolio Header Objects
+        /// </summary>
+        /// <returns></returns>
         public static PortfolioTableHeaders[] ToArray()
         {
             return new PortfolioTableHeaders[] { Date, Time,Type,WKN,ISIN,Symbol,SecurityName, ShareAmount,CurrencyGrossAmount,GrossAmount,
                 TransactionCurrency,Value,ExchangeRate,Fees,Taxes,Note,SecuritiesAccount,OffsetSecuritiesAccount,CashAccount };
         }
+        /// <summary>
+        /// returns an array of all availble Portfolio Header Object names as strings
+        /// </summary>
+        /// <returns></returns>
         public static string[] ToStringArray()
         {
             List<string> list = new List<string>();
@@ -115,6 +128,9 @@
             }
             return list.ToArray();
         }
+        /// <summary>
+        /// Gets the string representation of the Table Header.
+        /// </summary>
         public override string ToString()
         {
             return Name;

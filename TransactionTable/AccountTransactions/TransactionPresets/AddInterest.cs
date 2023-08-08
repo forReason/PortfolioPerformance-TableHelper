@@ -52,7 +52,7 @@ namespace PortfolioPerformanceTableHelper
             {
                 if (taxes > grossAmount)
                 {
-                    throw new ArgumentOutOfRangeException("taxes cant be larger than interest!", nameof(taxes));
+                    throw new ArgumentOutOfRangeException(nameof(taxes), "Taxes can't be larger than interest!");
                 }
             }
             Table table = GetTable(interestDate);

@@ -9,7 +9,7 @@ namespace PortfolioPerformanceTableHelper
         /// Adds a fee transaction to the Account Transactions table.
         /// </summary>
         /// <param name="cashAccount">The cash account associated with the fee transaction.</param>
-        /// <param name="depositDate">The date of the fee transaction.</param>
+        /// <param name="feeDate">The date of the fee transaction.</param>
         /// <param name="amount">The amount of the fee transaction.</param>
         /// <param name="security">An optional <see cref="Objects.Security"/> object representing the security associated with the fee transaction.</param>
         /// <param name="note">An optional note related to the fee transaction.</param>
