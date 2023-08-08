@@ -48,7 +48,7 @@
             name += ".csv";
             if (_TargetDirectory != null)
             {
-                name = Path.Combine(_TargetDirectory.Name, name);
+                name = Path.Combine(_TargetDirectory.FullName, name);
             }
             FileInfo targetFile = new FileInfo(name);
             return targetFile;
