@@ -18,7 +18,7 @@ namespace PortfolioPerformanceTableHelper.TransactionTable.TransactionsPreset
         /// <summary>
         /// Initializes a new instance of the AccountTransactionsTable class.
         /// </summary>
-        public TransactionsTable(FileInfo file, bool splitByMonths, string[] headers)
+        public TransactionsTable(FileInfo file, bool splitByMonths, string[] headers, bool keepTableTimeSorted = true)
         {
             _SplitByMonth = splitByMonths;
             _FileNameWithoutExtension = Path.GetFileNameWithoutExtension(file.Name);
@@ -33,5 +33,9 @@ namespace PortfolioPerformanceTableHelper.TransactionTable.TransactionsPreset
         /// defines the headers of the table
         /// </summary>
         private string[] _Headers { get; set; }
+        /// <summary>
+        /// defines if the table should be kept in time sorted manner (highly recommended)
+        /// </summary>
+        internal bool _KeepTableTimeSorted { get; set; }
     }
 }

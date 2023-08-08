@@ -1,5 +1,4 @@
 ﻿using PortfolioPerformanceTableHelper.Objects;
-using PortfolioPerformanceTableHelper.Objects;
 using QuickCsv.Net.Table_NS;
 
 namespace PortfolioPerformanceTableHelper
@@ -41,49 +40,64 @@ namespace PortfolioPerformanceTableHelper
             decimal shares, decimal transactionValue = 0m, decimal fees = 0, string? note = null)
         {
             Table table = GetTable(transferDate);
-            int index = table.AppendEmptyRecord();
+            // insert record at specified position
+            int? index = null;
+            if (this._KeepTableTimeSorted)
+            {
+                index = FetchIndexForRecordInsert(transferDate);
+            }
+            int newRecordIndex;
+            if (index == null)
+            {
+                newRecordIndex = table.AppendEmptyRecord();
+            }
+            else
+            {
+                newRecordIndex = index.Value;
+                table.InsertEmptyRecord(newRecordIndex);
+            }
             // set Transaction Type
-            table.SetCell(PortfolioTableHeaders.Type.Name, index, PortfolioTransactionTypes.TransferOutbound.Name);
+            table.SetCell(PortfolioTableHeaders.Type.Name, newRecordIndex, PortfolioTransactionTypes.TransferOutbound.Name);
             // select account, currency is defined by account
             //Table.SetCell(PortfolioTableHeaders.CashAccount.Name, index, account.Name);
-            table.SetCell(PortfolioTableHeaders.SecuritiesAccount.Name, index, sourceAccount.Name);
-            table.SetCell(PortfolioTableHeaders.OffsetSecuritiesAccount.Name, index, targetAccount.Name);
+            table.SetCell(PortfolioTableHeaders.SecuritiesAccount.Name, newRecordIndex, sourceAccount.Name);
+            table.SetCell(PortfolioTableHeaders.OffsetSecuritiesAccount.Name, newRecordIndex, targetAccount.Name);
             // set the time
             SplitDateTime time = DateTimeHelper.Split(transferDate);
-            table.SetCell(PortfolioTableHeaders.Date.Name, index, time.Date);
-            table.SetCell(PortfolioTableHeaders.Time.Name, index, time.Time);
+            table.SetCell(PortfolioTableHeaders.Date.Name, newRecordIndex, time.Date);
+            table.SetCell(PortfolioTableHeaders.Time.Name, newRecordIndex, time.Time);
             // set the security
             if (security != null)
             {
                 if (security.ISIN != null)
                 {
-                    table.SetCell(PortfolioTableHeaders.ISIN.Name, index, security.ISIN);
+                    table.SetCell(PortfolioTableHeaders.ISIN.Name, newRecordIndex, security.ISIN);
                 }
                 if (security.WKN != null)
                 {
-                    table.SetCell(PortfolioTableHeaders.WKN.Name, index, security.WKN);
+                    table.SetCell(PortfolioTableHeaders.WKN.Name, newRecordIndex, security.WKN);
                 }
                 if (security.TickerSymbol != null)
                 {
-                    table.SetCell(PortfolioTableHeaders.Symbol.Name, index, security.TickerSymbol);
+                    table.SetCell(PortfolioTableHeaders.Symbol.Name, newRecordIndex, security.TickerSymbol);
                 }
                 if (security.Name != null)
                 {
-                    table.SetCell(PortfolioTableHeaders.SecurityName.Name, index, security.Name);
+                    table.SetCell(PortfolioTableHeaders.SecurityName.Name, newRecordIndex, security.Name);
                 }
-                table.SetCell(PortfolioTableHeaders.TransactionCurrency.Name, index, security.ReferenceCurrency);
+                table.SetCell(PortfolioTableHeaders.TransactionCurrency.Name, newRecordIndex, security.ReferenceCurrency);
             }
             // set the amount
-            table.SetCell(PortfolioTableHeaders.ShareAmount.Name, index, shares.ToString("G"));
+            table.SetCell(PortfolioTableHeaders.ShareAmount.Name, newRecordIndex, shares.ToString("G"));
             if(transactionValue != 0m)
             {
-                table.SetCell(PortfolioTableHeaders.Value.Name, index, transactionValue.ToString("G"));
+                table.SetCell(PortfolioTableHeaders.Value.Name, newRecordIndex, transactionValue.ToString("G"));
             }
-            table.SetCell(PortfolioTableHeaders.Fees.Name, index, fees.ToString("G"));
+            table.SetCell(PortfolioTableHeaders.Fees.Name, newRecordIndex, fees.ToString("G"));
             // set the notes
             if (!string.IsNullOrEmpty(note))
             {
-                table.SetCell(AccountTableHeaders.Note.Name, index, note);
+                table.SetCell(AccountTableHeaders.Note.Name, newRecordIndex, note);
             }
         }
     }

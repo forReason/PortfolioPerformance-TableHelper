@@ -60,47 +60,62 @@ namespace PortfolioPerformanceTableHelper
             string? note = null)
         {
             Table table = GetTable(dividendDate);
-            int index = table.AppendEmptyRecord();
+            // insert record at specified position
+            int? index = null;
+            if (this._KeepTableTimeSorted)
+            {
+                index = FetchIndexForRecordInsert(dividendDate);
+            }
+            int newRecordIndex;
+            if (index == null)
+            {
+                newRecordIndex = table.AppendEmptyRecord();
+            }
+            else
+            {
+                newRecordIndex = index.Value;
+                table.InsertEmptyRecord(newRecordIndex);
+            }
             // set transaction type
-            table.SetCell(AccountTableHeaders.Type.Name, index, AccountTransactionTypes.Dividend.Name);
+            table.SetCell(AccountTableHeaders.Type.Name, newRecordIndex, AccountTransactionTypes.Dividend.Name);
             // select account, currency is defined by account
-            table.SetCell(AccountTableHeaders.CashAccount.Name, index, cashAccount.Name);
+            table.SetCell(AccountTableHeaders.CashAccount.Name, newRecordIndex, cashAccount.Name);
             // set the time
             SplitDateTime time = DateTimeHelper.Split(dividendDate);
-            table.SetCell(AccountTableHeaders.Date.Name, index, time.Date);
-            table.SetCell(AccountTableHeaders.Time.Name, index, time.Time);
+            table.SetCell(AccountTableHeaders.Date.Name, newRecordIndex, time.Date);
+            table.SetCell(AccountTableHeaders.Time.Name, newRecordIndex, time.Time);
             // set the security
             if (security != null)
             {
                 if (security.ISIN != null)
                 {
-                    table.SetCell(AccountTableHeaders.ISIN.Name, index, security.ISIN);
+                    table.SetCell(AccountTableHeaders.ISIN.Name, newRecordIndex, security.ISIN);
                 }
                 if (security.WKN != null)
                 {
-                    table.SetCell(AccountTableHeaders.WKN.Name, index, security.WKN);
+                    table.SetCell(AccountTableHeaders.WKN.Name, newRecordIndex, security.WKN);
                 }
                 if (security.TickerSymbol != null)
                 {
-                    table.SetCell(AccountTableHeaders.Symbol.Name, index, security.TickerSymbol);
+                    table.SetCell(AccountTableHeaders.Symbol.Name, newRecordIndex, security.TickerSymbol);
                 }
                 if (security.Name != null)
                 {
-                    table.SetCell(AccountTableHeaders.SecurityName.Name, index, security.Name);
+                    table.SetCell(AccountTableHeaders.SecurityName.Name, newRecordIndex, security.Name);
                 }
-                table.SetCell(AccountTableHeaders.TransactionCurrency.Name, index, security.ReferenceCurrency);
+                table.SetCell(AccountTableHeaders.TransactionCurrency.Name, newRecordIndex, security.ReferenceCurrency);
             }
             // set the amount
-            table.SetCell(AccountTableHeaders.ShareAmount.Name, index, shareAmount.ToString("G"));
-            table.SetCell(AccountTableHeaders.Value.Name, index, creditNote.ToString("G"));
+            table.SetCell(AccountTableHeaders.ShareAmount.Name, newRecordIndex, shareAmount.ToString("G"));
+            table.SetCell(AccountTableHeaders.Value.Name, newRecordIndex, creditNote.ToString("G"));
             // set fees
-            table.SetCell(AccountTableHeaders.Fees.Name, index, fees.ToString("G"));
+            table.SetCell(AccountTableHeaders.Fees.Name, newRecordIndex, fees.ToString("G"));
             // set taxes
-            table.SetCell(AccountTableHeaders.Taxes.Name, index, taxes.ToString("G"));
+            table.SetCell(AccountTableHeaders.Taxes.Name, newRecordIndex, taxes.ToString("G"));
             // set the notes
             if (!string.IsNullOrEmpty(note))
             {
-                table.SetCell(AccountTableHeaders.Note.Name, index, note);
+                table.SetCell(AccountTableHeaders.Note.Name, newRecordIndex, note);
             }
         }
     }

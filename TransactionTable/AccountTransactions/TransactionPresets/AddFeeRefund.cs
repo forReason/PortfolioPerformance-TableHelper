@@ -35,42 +35,57 @@ namespace PortfolioPerformanceTableHelper
         public void AddFeeRefund(DateTime feeDate, DepositAccount cashAccount, decimal amount, Objects.Security? security = null ,string? note = null)
         {
             Table table = GetTable(feeDate);
-            int index = table.AppendEmptyRecord();
+            // insert record at specified position
+            int? index = null;
+            if (this._KeepTableTimeSorted)
+            {
+                index = FetchIndexForRecordInsert(feeDate);
+            }
+            int newRecordIndex;
+            if (index == null)
+            {
+                newRecordIndex = table.AppendEmptyRecord();
+            }
+            else
+            {
+                newRecordIndex = index.Value;
+                table.InsertEmptyRecord(newRecordIndex);
+            }
             // set transaction type
-            table.SetCell(AccountTableHeaders.Type.Name, index, AccountTransactionTypes.FeesRefund.Name);
+            table.SetCell(AccountTableHeaders.Type.Name, newRecordIndex, AccountTransactionTypes.FeesRefund.Name);
             // select account, currency is defined by account
-            table.SetCell(AccountTableHeaders.CashAccount.Name, index, cashAccount.Name);
+            table.SetCell(AccountTableHeaders.CashAccount.Name, newRecordIndex, cashAccount.Name);
             // set the time
             SplitDateTime time = DateTimeHelper.Split(feeDate);
-            table.SetCell(AccountTableHeaders.Date.Name, index, time.Date);
-            table.SetCell(AccountTableHeaders.Time.Name, index, time.Time);
+            table.SetCell(AccountTableHeaders.Date.Name, newRecordIndex, time.Date);
+            table.SetCell(AccountTableHeaders.Time.Name, newRecordIndex, time.Time);
             // set the amount
-            table.SetCell(AccountTableHeaders.Value.Name, index, ((decimal)amount).ToString("G"));
+            table.SetCell(AccountTableHeaders.Value.Name, newRecordIndex, ((decimal)amount).ToString("G"));
             // set the security
             if (security != null)
             {
                 if (security.ISIN != null)
                 {
-                    table.SetCell(AccountTableHeaders.ISIN.Name, index, security.ISIN);
+                    table.SetCell(AccountTableHeaders.ISIN.Name, newRecordIndex, security.ISIN);
                 }
                 if (security.WKN != null)
                 {
-                    table.SetCell(AccountTableHeaders.WKN.Name, index, security.WKN);
+                    table.SetCell(AccountTableHeaders.WKN.Name, newRecordIndex, security.WKN);
                 }
                 if (security.TickerSymbol != null)
                 {
-                    table.SetCell(AccountTableHeaders.Symbol.Name, index, security.TickerSymbol);
+                    table.SetCell(AccountTableHeaders.Symbol.Name, newRecordIndex, security.TickerSymbol);
                 }
                 if (security.Name != null)
                 {
-                    table.SetCell(AccountTableHeaders.SecurityName.Name, index, security.Name);
+                    table.SetCell(AccountTableHeaders.SecurityName.Name, newRecordIndex, security.Name);
                 }
-                table.SetCell(AccountTableHeaders.TransactionCurrency.Name, index, security.ReferenceCurrency);
+                table.SetCell(AccountTableHeaders.TransactionCurrency.Name, newRecordIndex, security.ReferenceCurrency);
             }
             // set the notes
             if (!string.IsNullOrEmpty(note))
             {
-                table.SetCell(AccountTableHeaders.Note.Name, index, note);
+                table.SetCell(AccountTableHeaders.Note.Name, newRecordIndex, note);
             }
         }
     }

@@ -47,23 +47,38 @@ namespace PortfolioPerformanceTableHelper
             decimal amount, string? note = null)
         {
             Table table = GetTable(transferDate);
-            int index = table.AppendEmptyRecord();
+            // insert record at specified position
+            int? index = null;
+            if (this._KeepTableTimeSorted)
+            {
+                index = FetchIndexForRecordInsert(transferDate);
+            }
+            int newRecordIndex;
+            if (index == null)
+            {
+                newRecordIndex = table.AppendEmptyRecord();
+            }
+            else
+            {
+                newRecordIndex = index.Value;
+                table.InsertEmptyRecord(newRecordIndex);
+            }
             // set Transaction Type
-            table.SetCell(AccountTableHeaders.Type.Name, index, AccountTransactionTypes.TransferOutbound.Name);
+            table.SetCell(AccountTableHeaders.Type.Name, newRecordIndex, AccountTransactionTypes.TransferOutbound.Name);
             // select account, currency is defined by account
-            table.SetCell(AccountTableHeaders.CashAccount.Name, index, sourceAccount.Name);
-            table.SetCell(AccountTableHeaders.OffsetAccount.Name, index, targetAccount.Name);
+            table.SetCell(AccountTableHeaders.CashAccount.Name, newRecordIndex, sourceAccount.Name);
+            table.SetCell(AccountTableHeaders.OffsetAccount.Name, newRecordIndex, targetAccount.Name);
             // set the time
             SplitDateTime time = DateTimeHelper.Split(transferDate);
-            table.SetCell(AccountTableHeaders.Date.Name, index, time.Date);
-            table.SetCell(AccountTableHeaders.Time.Name, index, time.Time);
+            table.SetCell(AccountTableHeaders.Date.Name, newRecordIndex, time.Date);
+            table.SetCell(AccountTableHeaders.Time.Name, newRecordIndex, time.Time);
             // set the amount
-            table.SetCell(AccountTableHeaders.Value.Name, index, (-amount).ToString("G"));
+            table.SetCell(AccountTableHeaders.Value.Name, newRecordIndex, (-amount).ToString("G"));
 
             // set the notes
             if (!string.IsNullOrEmpty(note))
             {
-                table.SetCell(AccountTableHeaders.Note.Name, index, note);
+                table.SetCell(AccountTableHeaders.Note.Name, newRecordIndex, note);
             }
         }
     }

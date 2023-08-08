@@ -19,35 +19,10 @@ namespace PortfolioPerformanceTableHelper
         {
             Table table = GetTable(spotDate);
             // try to fetch index
-            int? startIndex = null;
-            for (int i = 1; i < table.Length - 1; i++) // only search from index 1-count-1 kecause 3 records are beeing checked
-            {
-                // fetch current index records Time
-                string date = table.GetCell(i, PortfolioTableHeaders.Date.ToString());
-                string time = table.GetCell(i, PortfolioTableHeaders.Time.ToString());
-                DateTime transactionTime = DateTimeHelper.Merge(date, time);
-                if (transactionTime == spotDate)
-                {
-                    startIndex = i;
-                    break;
-                }
-                // Fetch time of Previous record
-                string prevDate = table.GetCell(i-1, PortfolioTableHeaders.Date.ToString());
-                string prevTime = table.GetCell(i-1, PortfolioTableHeaders.Time.ToString());
-                DateTime prevRecod = DateTimeHelper.Merge(prevDate, prevTime);
-                // Fetch Time of next record
-                string nextDate = table.GetCell(i + 1, PortfolioTableHeaders.Date.ToString());
-                string nextTime = table.GetCell(i + 1, PortfolioTableHeaders.Time.ToString());
-                DateTime nextRecod = DateTimeHelper.Merge(nextDate, nextTime);
-                if (prevRecod <= transactionTime && nextRecod >= transactionTime)
-                {
-                    startIndex = i;
-                    break;
-                }
-            }
+            int? startIndex = FetchIndexForRecordInsert(spotDate);
             if (startIndex == null)
             {
-                return null;
+                startIndex = table.Length-1;
             }
             // try to find closest spot to determined index
             int checkLength = Math.Max(table.Length - startIndex.Value, table.Length - (table.Length - startIndex.Value));
